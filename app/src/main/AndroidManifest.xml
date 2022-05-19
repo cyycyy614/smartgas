@@ -17,7 +17,7 @@
         android:theme="@style/Theme.SmartGas">
         <activity
             android:name=".views.security.SecurityActivity"
-            android:exported="false" >
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

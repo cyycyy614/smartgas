@@ -3,11 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android/SmartGas/app/src/main/res/drawable/btn_status_close.xml" value="0.1745" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/drawable/btn_status_issued.xml" value="0.1745" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/drawable/corners_red_bg.xml" value="0.1745" />
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/rectangel_item.xml" value="0.117" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/activity_main.xml" value="0.1765625" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/activity_security.xml" value="0.1828125" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/content_main.xml" value="0.1765625" />
-        <entry key="..\:/android/SmartGas/app/src/main/res/layout/item_security.xml" value="0.13333333333333333" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/layout/fragment_first.xml" value="0.18478260869565216" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/layout/fragment_second.xml" value="0.18541666666666667" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/layout/fragment_security.xml" value="0.18478260869565216" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/layout/fragment_security_item.xml" value="0.25" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/layout/item_security.xml" value="0.264" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/menu/menu_main.xml" value="0.2234375" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/menu/menu_tab_layout.xml" value="0.2234375" />
       </map>
     </option>
   </component>

@@ -5,40 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.security.SecurityActivity">
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
         android:layout_height="match_parent">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_tab"
+            android:layout_width="match_parent"
+            app:tabIndicatorColor="@color/red"
+            app:tabSelectedTextColor="@color/red"
+            app:tabIndicatorHeight="3dp"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabTextColor="@color/black"
+            app:tabBackground="@android:color/transparent"
+            app:tabTextAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:layout_height="48dp"
+            android:background="@color/white">
 
-        <FrameLayout
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <org.itheima.recycler.widget.ItheimaRecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <org.itheima.recycler.header.RecyclerViewHeader
-                android:id="@+id/recycler_header"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_gravity="center_horizontal|top">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-                </LinearLayout>
-
-            </org.itheima.recycler.header.RecyclerViewHeader>
-        </FrameLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
+        </androidx.viewpager.widget.ViewPager>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,42 +22,34 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/st_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="标题"
+                android:text=""
                 android:textColor="@android:color/background_dark"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="标题标题标题标题标题标题标题" />
+                tools:text="@string/security_name" />
             <Button
                 android:id="@+id/tag_1"
-                android:layout_width="50dp"
-                android:layout_height="35dp"
-                android:background="@drawable/corners_blue_bg"
-                android:text="已上报"
-                android:textColor="@color/white"
-                android:visibility="gone"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:background="@drawable/btn_status_issued"
+                android:text="@string/status_issued"
+                android:textColor="@color/status_issued"
+                android:visibility="visible"
                 android:textSize="12sp" />
             <Button
                 android:id="@+id/tag_2"
-                android:layout_width="50dp"
-                android:layout_height="35dp"
-                android:background="@drawable/corners_red_bg"
-                android:text="未处理"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-            <Button
-                android:id="@+id/tag_3"
-                android:layout_width="50dp"
-                android:layout_height="35dp"
-                android:background="@drawable/corners_primary_bg"
-                android:text="已处理"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
                 android:visibility="gone"
-                android:textColor="@color/white"
+                android:background="@drawable/btn_status_close"
+                android:text="@string/status_close"
+                android:textColor="@color/status_closed"
                 android:textSize="12sp" />
         </LinearLayout>
         <LinearLayout
@@ -65,108 +57,193 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_reason"
+            <LinearLayout
                 android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:drawableLeft="@mipmap/icon_category"
+                android:drawableLeft="@mipmap/icon_time"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@android:color/background_dark"
                 android:textSize="14sp"
-                tools:text="燃气" />
-
-            <TextView
-                android:id="@+id/tv_level"
-                android:layout_width="0dp"
+                tools:text="@string/start_time" />
+                <TextView
+                android:id="@+id/st_startdate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@android:color/background_dark"
+                android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_weight="1"
-                android:drawableLeft="@mipmap/icon_level"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@mipmap/icon_time"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="15566668888"
+                android:text=""
                 android:textColor="@android:color/background_dark"
                 android:textSize="14sp"
-                tools:text="高级" />
-
+                tools:text="@string/end_time" />
+            <TextView
+                android:id="@+id/st_enddate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@android:color/background_dark"
+                android:textSize="14sp"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_customer"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:drawableLeft="@mipmap/icon_customer"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="网上那"
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp"
-                tools:text="枉少年" />
-
-            <TextView
-                android:id="@+id/tv_mobile"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@mipmap/icon_user"
+                    android:drawablePadding="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    tools:text="@string/plan_count" />
+                <TextView
+                    android:id="@+id/st_playcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:drawableLeft="@mipmap/icon_mobile"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="15566668888"
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp"
-                tools:text="15566668888" />
-
-            <TextView
-                android:id="@+id/tv_location"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:drawableLeft="@mipmap/icon_list_1"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="国际创新园"
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp"
-                tools:text="国际创新园" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@mipmap/icon_security_count"
+                    android:drawablePadding="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    tools:text="@string/security_count" />
+                <TextView
+                    android:id="@+id/st_securitycount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"/>
+            </LinearLayout>
         </LinearLayout>
-        <TextView
-            android:id="@+id/tv_date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@mipmap/icon_time"
-            android:drawablePadding="10dp"
-            android:text="@string/app_name"
-            android:textSize="12sp"
-            tools:text="2016-08-8 10:30:10" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/tv_btn"
-            android:layout_width="120dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/corners_green_bg"
-            android:text="查看详情"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@mipmap/icon_rate"
+                    android:drawablePadding="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    tools:text="@string/rate" />
+                <TextView
+                    android:id="@+id/st_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@mipmap/icon_plan_status"
+                    android:drawablePadding="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    tools:text="@string/state" />
+                <TextView
+                    android:id="@+id/st_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 
