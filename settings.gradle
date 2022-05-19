@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven {
+            url "https://raw.githubusercontent.com/Pgyer/mvn_repo_pgyer/master"
+        }
+        maven {
+            url 'https://raw.githubusercontent.com/liaohuqiu/umeng-libs/master/repository'
+        }
+    }
+}
+rootProject.name = "SmartGas"
+include ':app'
