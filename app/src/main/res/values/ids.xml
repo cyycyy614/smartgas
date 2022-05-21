@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="plan_address" type="id" />
+    <item name="plan_state" type="id" />
+    <item name="plan_date" type="id" />
+</resources>

@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/st_title"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -33,222 +33,194 @@
                 android:textSize="16sp"
                 tools:text="@string/security_name" />
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/username"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/font_gray"
+                    android:textSize="14sp"
+                    tools:text="@string/username" />
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="textEnd"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/userno"
+                    android:textColor="@color/font_gray"
+                    android:textSize="14sp"
+                    tools:text="@string/userno" />
+                <TextView
+                    android:id="@+id/userno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="textEnd"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/mobile"
+                    android:textColor="@color/font_gray"
+                    android:textSize="14sp"
+                    tools:text="@string/mobile" />
+                <TextView
+                    android:id="@+id/mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/userstatus"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/font_gray"
+                    android:textSize="14sp"
+                    tools:text="@string/userstatus" />
+                <TextView
+                    android:id="@+id/userstatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="textEnd"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/address"
+                    android:textColor="@color/font_gray"
+                    android:textSize="14sp"
+                    tools:text="@string/address" />
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="right"
+            android:layout_height="wrap_content">
             <Button
-                android:id="@+id/tag_1"
+                android:id="@+id/btn_record"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:background="@drawable/btn_status_issued"
+                android:background="@drawable/btn_status_record"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 app:backgroundTint="@null"
-                android:text="@string/status_issued"
-                android:textColor="@color/status_issued"
+                android:text="@string/securityrecord"
+                android:textColor="@color/status_record"
                 android:textSize="12sp"
-                android:visibility="visible" />
+                android:visibility="gone" />
             <Button
-                android:id="@+id/tag_2"
+                android:id="@+id/btn_enter"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 app:backgroundTint="@null"
-                android:background="@drawable/btn_status_close"
-                android:text="@string/status_close"
-                android:textColor="@color/status_closed"
+                android:background="@drawable/btn_status_issued"
+                android:text="@string/enter"
+                android:textColor="@color/status_issued"
                 android:textSize="12sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:drawableLeft="@mipmap/icon_time"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@string/start_time"
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp"
-                tools:text="@string/start_time" />
-                <TextView
-                android:id="@+id/st_startdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:drawableLeft="@mipmap/icon_time"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@string/end_time"
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp"
-                tools:text="@string/end_time" />
-            <TextView
-                android:id="@+id/st_enddate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp"/>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:drawableLeft="@mipmap/icon_user"
-                    android:drawablePadding="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/plan_count"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="14sp"
-                    tools:text="@string/plan_count" />
-                <TextView
-                    android:id="@+id/st_playcount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text=""
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="14sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:drawableLeft="@mipmap/icon_security_count"
-                    android:drawablePadding="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/security_count"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="14sp"
-                    tools:text="@string/security_count" />
-                <TextView
-                    android:id="@+id/st_securitycount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text=""
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:drawableLeft="@mipmap/icon_rate"
-                    android:drawablePadding="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/rate"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="14sp"
-                    tools:text="@string/rate" />
-                <TextView
-                    android:id="@+id/st_rate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text=""
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="14sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:drawableLeft="@mipmap/icon_plan_status"
-                    android:drawablePadding="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/state"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="14sp"
-                    tools:text="@string/state" />
-                <TextView
-                    android:id="@+id/st_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text=""
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="14sp"/>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

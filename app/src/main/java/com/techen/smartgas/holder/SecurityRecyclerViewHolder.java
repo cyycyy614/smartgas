@@ -54,8 +54,8 @@ public class SecurityRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityB
             tag2.setVisibility(View.VISIBLE);
         }
         stTitle.setText(mData.getName());
-        stStartdate.setText(mData.getPubDate());
-        stEnddate.setText(mData.getPubDate());
+        stStartdate.setText("2022-10-10");
+        stEnddate.setText("2022-10-10");
         stPlaycount.setText("10");
         stSecuritycount.setText("10");
         stRate.setText("10%");

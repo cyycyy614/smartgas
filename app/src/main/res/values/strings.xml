@@ -22,4 +22,14 @@
     <string name="security_count">安检户数:</string>
     <string name="rate">安检率:</string>
     <string name="state">计划状态:</string>
+
+    <!--    用户列表-->
+    <string name="username">用户名:</string>
+    <string name="userno">用户号:</string>
+    <string name="mobile">电话:</string>
+    <string name="userstatus">用户状态:</string>
+    <string name="address">详细地址:</string>
+    <string name="enter">入户</string>
+    <string name="securityrecord">安检记录</string>
+    <string name="date_range">日期范围:</string>
 </resources>

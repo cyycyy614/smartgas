@@ -1,32 +1,34 @@
 package com.techen.smartgas.views.security;
 
+import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.techen.smartgas.R;
-import com.techen.smartgas.holder.SecurityRecyclerViewHolder;
+import com.techen.smartgas.holder.UserListRecyclerViewHolder;
 import com.techen.smartgas.model.SecurityBean;
+import com.techen.smartgas.widget.IosPopupWindow;
 
 import org.itheima.recycler.L;
 import org.itheima.recycler.adapter.BaseLoadMoreRecyclerAdapter;
 import org.itheima.recycler.listener.ItemClickSupport;
 import org.itheima.recycler.widget.ItheimaRecyclerView;
 import org.itheima.recycler.widget.PullToLoadMoreRecyclerView;
-import org.itheima.recycler.widget.RecyclerViewHeader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,15 +37,14 @@ import okhttp3.Headers;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SecurityItemFragment#newInstance} factory method to
+ * Use the {@link UserListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SecurityItemFragment extends Fragment {
+public class UserListFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String EXTRA_TYPE = "type";
-    private String TAG = "SECURITY";
+    private static final String EXTRA_ID = "id";
+    private String TAG = "USERLIST";
+//    private AlertView mAlertView;
 
     BaseLoadMoreRecyclerAdapter.LoadMoreViewHolder holder;
     PullToLoadMoreRecyclerView pullToLoadMoreRecyclerView;
@@ -54,7 +55,6 @@ public class SecurityItemFragment extends Fragment {
     @BindView(R.id.recycler_header)
     org.itheima.recycler.header.RecyclerViewHeader myrecyclerHeader;
 
-
     String handle;
     Integer pageIndex = 0;
     private int state = 0;
@@ -64,34 +64,32 @@ public class SecurityItemFragment extends Fragment {
     View contentView;
     ArrayList<SecurityBean.ResultBean.ItemsBean> itemsBeanList = new ArrayList<>();
     private Unbinder unbinder;
-    // TODO: Rename and change types of parameters
-    private String type;
+    private String id;
 
-    public SecurityItemFragment() {
+    public UserListFragment() {
         // Required empty public constructor
     }
 
-    public static SecurityItemFragment newInstance(String type) {
+    public static UserListFragment newInstance(String id) {
         Bundle arguments = new Bundle();
-        arguments.putString(EXTRA_TYPE, type);
-        SecurityItemFragment securityItemFragment = new SecurityItemFragment();
-        securityItemFragment.setArguments(arguments);
-        return securityItemFragment;
+        arguments.putString(EXTRA_ID, id);
+        UserListFragment userListFragment = new UserListFragment();
+        userListFragment.setArguments(arguments);
+        return userListFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            type = getArguments().getString(EXTRA_TYPE);
+            id = getArguments().getString(EXTRA_ID);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        contentView = inflater.inflate(R.layout.fragment_security_item, container, false);
+        contentView = inflater.inflate(R.layout.fragment_user_list, container, false);
         unbinder = ButterKnife.bind(this, contentView);
         myrecyclerView = contentView.findViewById(R.id.recycler_view);
         list();
@@ -112,20 +110,16 @@ public class SecurityItemFragment extends Fragment {
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Integer id = itemsBeanList.get(position).getId();
-                String name = itemsBeanList.get(position).getName();
-                Intent intent = new Intent(contentView.getContext(), UserListActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-                Toast.makeText(recyclerView.getContext(), "我被点击了", Toast.LENGTH_SHORT).show();
+                SecurityBean.ResultBean.ItemsBean mData =  itemsBeanList.get(position);
+                handleItemClick(mData);
             }
         });
 
-        pullToLoadMoreRecyclerView = new PullToLoadMoreRecyclerView<SecurityBean>(myswipeRefreshLayout, myrecyclerView, SecurityRecyclerViewHolder.class) {
+        pullToLoadMoreRecyclerView = new PullToLoadMoreRecyclerView<SecurityBean>(myswipeRefreshLayout, myrecyclerView, UserListRecyclerViewHolder.class) {
             @Override
             public int getItemResId() {
                 //recylerview item资源id
-                return R.layout.item_security;
+                return R.layout.item_user;
             }
 
             @Override
@@ -139,11 +133,11 @@ public class SecurityItemFragment extends Fragment {
                         break;
                 }
                 //接口
-                Log.i(TAG, "type is " + type);
-                return "action/apiv2/banner?catalog=1&startrow=" + pageIndex + "&type=" + type + "&handle=" + handle;
+                Log.i(TAG, "id is " + id);
+                return "action/apiv2/banner?catalog=1&startrow=" + pageIndex + "&id=" + id + "&handle=" + handle;
             }
 
-            //            //是否加载更多的数据，根据业务逻辑自行判断，true表示有更多的数据，false表示没有更多的数据，如果不需要监听可以不重写该方法
+            //是否加载更多的数据，根据业务逻辑自行判断，true表示有更多的数据，false表示没有更多的数据，如果不需要监听可以不重写该方法
             @Override
             public boolean isMoreData(BaseLoadMoreRecyclerAdapter.LoadMoreViewHolder holder1) {
                 System.out.println("isMoreData---------------------" + holder1);
@@ -193,5 +187,31 @@ public class SecurityItemFragment extends Fragment {
         });
 
         pullToLoadMoreRecyclerView.requestData();
+    }
+
+    private void handleItemClick(SecurityBean.ResultBean.ItemsBean mData){
+        Integer id = mData.getId();
+        String name = mData.getName();
+//        Intent intent = new Intent(contentView.getContext(), UserListActivity.class);
+//        intent.putExtra("id", id);
+//        startActivity(intent);
+
+        IosPopupWindow mPopupWindow = new IosPopupWindow(getActivity(), new IosPopupWindow.OnClickListener() {
+            @Override
+            public void onItemClick(Object o, int position, Map<String, Object> data) {
+                //弹出alipay码
+                Log.i(TAG,"弹框位置：" + data);
+                Toast.makeText(contentView.getContext(), "您单击了" + data.get("name").toString(),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void cancel() {
+                //取消
+
+            }
+        });
+
+        mPopupWindow.show(contentView);
+
     }
 }

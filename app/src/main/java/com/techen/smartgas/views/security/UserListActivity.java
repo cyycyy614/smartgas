@@ -1,22 +1,17 @@
 package com.techen.smartgas.views.security;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Lifecycle;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+
+import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -28,12 +23,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SecurityActivity extends AppCompatActivity {
+public class UserListActivity extends AppCompatActivity {
     @BindView(R.id.tl_tab)
     TabLayout mTabTl;
     @BindView(R.id.vp_content)
     ViewPager2 mContentVp;
-
     private List<String> tabIndicators;
     private List<Fragment> tabFragments;
     private ContentPagerAdapter contentAdapter;
@@ -41,9 +35,9 @@ public class SecurityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_security);
+        setContentView(R.layout.activity_user_list);
         ButterKnife.bind(this);
-        setTitle("安检计划");
+        setTitle("用户列表");
 
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
@@ -85,13 +79,14 @@ public class SecurityActivity extends AppCompatActivity {
     private void initContent(){
         tabIndicators = new ArrayList<>();
         tabIndicators.add("全部");
-        tabIndicators.add("下发");
-        tabIndicators.add("关闭");
+        tabIndicators.add("正常");
+        tabIndicators.add("待安检");
+        tabIndicators.add("隐患");
         tabFragments = new ArrayList<>();
         for(int i = 0;i < tabIndicators.size(); i ++){
-            tabFragments.add(SecurityItemFragment.newInstance(i + ""));
+            tabFragments.add(UserListFragment.newInstance(i + ""));
         }
-        contentAdapter = new ContentPagerAdapter(getSupportFragmentManager(), getLifecycle());
+        contentAdapter = new UserListActivity.ContentPagerAdapter(getSupportFragmentManager(), getLifecycle());
         mContentVp.setAdapter(contentAdapter);
     }
 
@@ -112,7 +107,4 @@ public class SecurityActivity extends AppCompatActivity {
         }
 
     }
-
-
-
 }
