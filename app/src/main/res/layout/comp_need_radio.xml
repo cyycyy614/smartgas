@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_need_radio"
+    android:layout_width="match_parent"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_height="wrap_content">
+
+    <com.techen.smartgas.widget.RequiredTextView
+        android:id="@+id/label_radio_need"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="right"
+        android:text="悬挂物品："
+        app:prefix="*"></com.techen.smartgas.widget.RequiredTextView>
+
+    <Switch
+        android:id="@+id/switch_need"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:gravity="fill_vertical|end"
+        android:switchMinWidth="30dp"
+        android:layout_marginTop="0dp"
+        android:thumb="@drawable/switch_ios_thumb"
+        android:track="@drawable/switch_ios_track_selector"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+</RelativeLayout>
+

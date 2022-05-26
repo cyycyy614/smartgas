@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RequiredTextView">
+        <attr name="android:text" />
+        <attr name="prefix" format="string|reference" />
+        <attr name="prefix_color" format="color|reference" />
+    </declare-styleable>
+    <declare-styleable name="AutoNextLineLinearLayout">
+        <attr name="horizontalSpacing" format="dimension"/>
+        <attr name="verticalSpacing" format="dimension"/>
+    </declare-styleable>
+</resources>

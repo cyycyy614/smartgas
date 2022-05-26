@@ -27,6 +27,7 @@ import org.itheima.recycler.widget.ItheimaRecyclerView;
 import org.itheima.recycler.widget.PullToLoadMoreRecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -189,18 +190,45 @@ public class UserListFragment extends Fragment {
         pullToLoadMoreRecyclerView.requestData();
     }
 
+    private List<Map<String, Object>> initDatas() {
+        List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
+        Map map1=new HashMap();
+        map1.put("img","");
+        map1.put("name","正常");
+        Map map2=new HashMap();
+        map2.put("img",R.mipmap.icon_correct);
+        map2.put("name","隐患");
+        Map map3=new HashMap();
+        map3.put("img","");
+        map3.put("name","到访不遇");
+        Map map4=new HashMap();
+        map4.put("img","");
+        map4.put("name","拒绝入户");
+        datas.add(map1);
+        datas.add(map2);
+        datas.add(map3);
+        datas.add(map4);
+        return datas;
+    }
+
     private void handleItemClick(SecurityBean.ResultBean.ItemsBean mData){
         Integer id = mData.getId();
         String name = mData.getName();
+        List<Map<String, Object>> datas = initDatas();
 //        Intent intent = new Intent(contentView.getContext(), UserListActivity.class);
 //        intent.putExtra("id", id);
 //        startActivity(intent);
 
-        IosPopupWindow mPopupWindow = new IosPopupWindow(getActivity(), new IosPopupWindow.OnClickListener() {
+        IosPopupWindow mPopupWindow = new IosPopupWindow(getActivity(), datas, new IosPopupWindow.OnClickListener() {
             @Override
             public void onItemClick(Object o, int position, Map<String, Object> data) {
                 //弹出alipay码
                 Log.i(TAG,"弹框位置：" + data);
+                Integer id = (Integer) data.get("id");
+                String name = (String) data.get("name");
+                Intent intent = new Intent(contentView.getContext(), SecurityAddActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
                 Toast.makeText(contentView.getContext(), "您单击了" + data.get("name").toString(),Toast.LENGTH_SHORT).show();
             }
 

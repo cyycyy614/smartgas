@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_need_select"
+    android:layout_width="match_parent"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_height="wrap_content">
+    <com.techen.smartgas.widget.RequiredTextView
+        android:id="@+id/label_select_need"
+        android:layout_width="85dp"
+        android:gravity="right"
+        android:layout_height="wrap_content"
+        app:prefix="*"
+        android:text="必选项：">
+    </com.techen.smartgas.widget.RequiredTextView>
+    <TextView
+        android:id="@+id/select_need"
+        android:layout_width="0.0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="请选择"
+        android:drawableRight="@mipmap/icon_arrow"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp" />
+</LinearLayout>

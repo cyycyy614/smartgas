@@ -1,5 +1,6 @@
 package com.techen.smartgas.views.security;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +28,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * 页面：安检计划列表页面
+ * 描述：显示安检计划列表
+ */
 public class SecurityActivity extends AppCompatActivity {
     @BindView(R.id.tl_tab)
     TabLayout mTabTl;
@@ -56,6 +60,7 @@ public class SecurityActivity extends AppCompatActivity {
         initContent();
         initTab();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

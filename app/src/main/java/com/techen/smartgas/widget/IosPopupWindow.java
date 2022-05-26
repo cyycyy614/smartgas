@@ -35,9 +35,10 @@ public class IosPopupWindow extends PopupWindow {
     private ListView listView;
     private SimpleAdapter simpleAdapter;
 
-    public IosPopupWindow(Activity context, OnClickListener itemsOnClick) {
+    public IosPopupWindow(Activity context, List<Map<String, Object>> data, OnClickListener itemsOnClick) {
         this.mActivity = context;
         mOnClickListener = itemsOnClick;
+        datas = data;
         View view = LayoutInflater.from(context).inflate(R.layout.ios_popup_window_layout, null);
 
         setContentView(view);
@@ -93,9 +94,9 @@ public class IosPopupWindow extends PopupWindow {
         Map map3=new HashMap();
         map3.put("img","");
         map3.put("name","选择3");
-        datas.add(map1);
-        datas.add(map2);
-        datas.add(map3);
+//        datas.add(map1);
+//        datas.add(map2);
+//        datas.add(map3);
     }
 
     public void setPopupOnClickListener(OnClickListener mPopupOnClickListener){

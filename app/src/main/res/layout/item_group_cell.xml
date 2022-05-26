@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/section"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingTop="10dp"
+    android:paddingBottom="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/group"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/divider"
+            android:layout_width="2dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/blue" />
+
+        <TextView
+            android:id="@+id/group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="管道"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_need_select"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+        <com.techen.smartgas.widget.RequiredTextView
+            android:id="@+id/label_select_need"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="必选项：">
+        </com.techen.smartgas.widget.RequiredTextView>
+        <TextView
+            android:id="@+id/select_need"
+            android:layout_width="0.0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="请选择"
+            android:drawableRight="@mipmap/icon_arrow"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_unneed_select"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_select_unneed"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="非必填：">
+        </TextView>
+        <TextView
+            android:id="@+id/select_unneed"
+            android:layout_width="0.0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="请选择"
+            android:drawableRight="@mipmap/icon_arrow"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_unneed_radio"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/label_radio_unneed"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="right"
+            android:text="悬挂物品："></TextView>
+
+        <Switch
+            android:id="@+id/switch_unneed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:gravity="fill_vertical|end"
+            android:switchMinWidth="30dp"
+            android:layout_marginTop="0dp"
+            android:thumb="@drawable/switch_ios_thumb"
+            android:track="@drawable/switch_ios_track_selector"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_need_radio"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_height="wrap_content">
+
+        <com.techen.smartgas.widget.RequiredTextView
+            android:id="@+id/label_radio_need"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="right"
+            android:text="悬挂物品："
+            app:prefix="*"></com.techen.smartgas.widget.RequiredTextView>
+
+        <Switch
+            android:id="@+id/switch_need"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:gravity="fill_vertical|end"
+            android:switchMinWidth="30dp"
+            android:layout_marginTop="0dp"
+            android:thumb="@drawable/switch_ios_thumb"
+            android:track="@drawable/switch_ios_track_selector"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_unneed_date"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_date_unneed"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="安装时间：">
+        </TextView>
+        <TextView
+            android:id="@+id/date_unneed"
+            android:layout_width="0.0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="请选择时间"
+            android:drawableRight="@mipmap/icon_arrow"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_need_date"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_height="wrap_content">
+        <com.techen.smartgas.widget.RequiredTextView
+            android:id="@+id/label_date_need"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="安装时间：">
+        </com.techen.smartgas.widget.RequiredTextView>
+        <TextView
+            android:id="@+id/date_need"
+            android:layout_width="0.0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="请选择时间"
+            android:drawableRight="@mipmap/icon_arrow"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layout_unneed_input"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/label_input_unneed"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="right"
+            android:text="使用年限："
+            app:prefix="*"></TextView>
+
+        <EditText
+            android:id="@+id/input_unneed"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:inputType="text"
+            android:lines="1"
+            android:background="@drawable/rectangel_item"
+            android:hint="请输入"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textSize="14dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_need_input"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+
+        <com.techen.smartgas.widget.RequiredTextView
+            android:id="@+id/label_input_need"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="使用年限限限："
+            app:prefix="*"></com.techen.smartgas.widget.RequiredTextView>
+
+        <EditText
+            android:id="@+id/input_need"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:inputType="text"
+            android:lines="1"
+            android:background="@drawable/rectangel_item"
+            android:hint="请输入"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textSize="14dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_checkbox_unneed"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_checkbox_unneed"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="复选框：">
+        </TextView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_checkbox_need"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <com.techen.smartgas.widget.RequiredTextView
+            android:id="@+id/label_checkbox_need"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="复选框：">
+        </com.techen.smartgas.widget.RequiredTextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_method"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_method"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="整改方式：">
+        </TextView>
+        <TextView
+            android:id="@+id/text_method"
+            android:layout_width="0.0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="请选择"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_isreport"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_isreport"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="是否上报：">
+        </TextView>
+        <TextView
+            android:id="@+id/select_report"
+            android:layout_width="0.0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="请选择"
+            android:drawableRight="@mipmap/icon_arrow"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_textarea_unneed"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_textarea_unneed"
+            android:layout_centerVertical="true"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="备注：">
+        </TextView>
+
+        <EditText
+            android:id="@+id/textarea_unneed"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rectangel_item"
+            android:textSize="14dp"
+            android:hint="请输入"
+            android:lines="3"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_camera"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/label6"
+                android:gravity="right"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                app:prefix="*"
+                android:text="拍照：">
+            </TextView>
+        </LinearLayout>
+        <org.apmem.tools.layouts.FlowLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dip"
+            android:paddingTop="20dip"
+            android:paddingRight="20dip"
+            android:paddingBottom="20dip"
+            android:orientation="horizontal"
+            android:background="@drawable/rectangel_item">
+
+            <LinearLayout
+                android:id="@+id/ll_upload"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/dashed_bg"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/upload"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@android:string/unknownName"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/icon_pic" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="上传凭证"
+                    android:textColor="@color/gray"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="(最多6张)"
+                    android:textColor="@color/gray"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_img1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp">
+
+                <ImageView
+                    android:id="@+id/upload_img1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:contentDescription="@android:string/unknownName"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/icon_map" />
+                <ImageView
+                    android:id="@+id/upload_del1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="0dp"
+                    android:src="@mipmap/icon_del"
+                    android:visibility="visible" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relative_img2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp">
+                <ImageView
+                    android:id="@+id/upload_img2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:contentDescription="@android:string/unknownName"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/icon_map" />
+                <ImageView
+                    android:id="@+id/upload_del2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:src="@mipmap/icon_del"
+                    android:visibility="visible" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relative_img3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp">
+                <ImageView
+                    android:id="@+id/upload_img3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:contentDescription="@android:string/unknownName"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/icon_map" />
+                <ImageView
+                    android:id="@+id/upload_del3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:src="@mipmap/icon_del"
+                    android:visibility="visible" />
+            </RelativeLayout>
+        </org.apmem.tools.layouts.FlowLayout>
+    </LinearLayout>
+
+</LinearLayout>

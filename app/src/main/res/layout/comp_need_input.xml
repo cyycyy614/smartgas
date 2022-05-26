@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_need_input"
+    android:layout_width="match_parent"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_marginTop="0dp"
+    android:layout_height="wrap_content">
+
+    <com.techen.smartgas.widget.RequiredTextView
+        android:id="@+id/label_input_need"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="使用年限限限："
+        app:prefix="*"></com.techen.smartgas.widget.RequiredTextView>
+
+    <EditText
+        android:id="@+id/input_need"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:inputType="text"
+        android:lines="1"
+        android:background="@drawable/rectangel_item"
+        android:hint="请输入"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textSize="14dp" />
+</RelativeLayout>
+

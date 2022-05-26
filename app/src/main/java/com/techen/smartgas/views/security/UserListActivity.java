@@ -22,7 +22,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * 页面：用户列表页面
+ * 描述：显示某个计划下面的用户列表
+ */
 public class UserListActivity extends AppCompatActivity {
     @BindView(R.id.tl_tab)
     TabLayout mTabTl;
