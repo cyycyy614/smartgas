@@ -13,4 +13,7 @@
     <item name="group8" type="id" />
     <item name="group9" type="id" />
     <item name="group10" type="id" />
+
+    <item name="tag_1" type="id"></item>
+    <item name="tag_2" type="id"></item>
 </resources>

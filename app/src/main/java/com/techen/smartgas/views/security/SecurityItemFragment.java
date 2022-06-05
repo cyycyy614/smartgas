@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.techen.smartgas.R;
 import com.techen.smartgas.holder.SecurityRecyclerViewHolder;
 import com.techen.smartgas.model.SecurityBean;
+import com.techen.smartgas.util.LoadingDialog;
+import com.techen.smartgas.util.SharedPreferencesUtil;
+import com.techen.smartgas.util.Tool;
+import com.techen.smartgas.views.workorder.WorkOrderDetailActivity;
 
 import org.itheima.recycler.L;
 import org.itheima.recycler.adapter.BaseLoadMoreRecyclerAdapter;
@@ -43,26 +48,28 @@ public class SecurityItemFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String EXTRA_TYPE = "type";
+    private static final String EXTRA_FLAG = "flag";
     private String TAG = "SECURITY";
-
+    private Integer repetition_flag = 0 ;
     BaseLoadMoreRecyclerAdapter.LoadMoreViewHolder holder;
     PullToLoadMoreRecyclerView pullToLoadMoreRecyclerView;
 
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout myswipeRefreshLayout;
+    @BindView(R.id.layout_nodata)
+    LinearLayout layout_NoData;
     ItheimaRecyclerView myrecyclerView;
     @BindView(R.id.recycler_header)
     org.itheima.recycler.header.RecyclerViewHeader myrecyclerHeader;
 
 
     String handle;
-    Integer pageIndex = 0;
+    Integer pageIndex = 1;
     private int state = 0;
     private static final int STATE_FRESH = 1;
     private static final int STATE_MORE = 2;
-    private int pageindex = 0;
     View contentView;
-    ArrayList<SecurityBean.ResultBean.ItemsBean> itemsBeanList = new ArrayList<>();
+    ArrayList<SecurityBean.ResultBean.DataListBean> itemsBeanList = new ArrayList<>();
     private Unbinder unbinder;
     // TODO: Rename and change types of parameters
     private String type;
@@ -71,9 +78,10 @@ public class SecurityItemFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static SecurityItemFragment newInstance(String type) {
+    public static SecurityItemFragment newInstance(String type,Integer flag) {
         Bundle arguments = new Bundle();
         arguments.putString(EXTRA_TYPE, type);
+        arguments.putInt(EXTRA_FLAG, flag);
         SecurityItemFragment securityItemFragment = new SecurityItemFragment();
         securityItemFragment.setArguments(arguments);
         return securityItemFragment;
@@ -84,6 +92,7 @@ public class SecurityItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getString(EXTRA_TYPE);
+            repetition_flag = getArguments().getInt(EXTRA_FLAG);
         }
     }
 
@@ -94,6 +103,7 @@ public class SecurityItemFragment extends Fragment {
         contentView = inflater.inflate(R.layout.fragment_security_item, container, false);
         unbinder = ButterKnife.bind(this, contentView);
         myrecyclerView = contentView.findViewById(R.id.recycler_view);
+        LoadingDialog.getInstance(contentView.getContext()).show();
         list();
         return contentView;
     }
@@ -101,6 +111,7 @@ public class SecurityItemFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        LoadingDialog.setInstance(null);
         unbinder.unbind();
     }
 
@@ -112,12 +123,12 @@ public class SecurityItemFragment extends Fragment {
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Integer id = itemsBeanList.get(position).getId();
-                String name = itemsBeanList.get(position).getName();
+                Long id = itemsBeanList.get(position).getId();
+                String name = itemsBeanList.get(position).getPlan_name();
                 Intent intent = new Intent(contentView.getContext(), UserListActivity.class);
-                intent.putExtra("id", id);
+                intent.putExtra("id", id+"");
+                intent.putExtra("repetition_flag", repetition_flag);
                 startActivity(intent);
-                Toast.makeText(recyclerView.getContext(), "我被点击了", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -132,7 +143,7 @@ public class SecurityItemFragment extends Fragment {
             public String getApi() {
                 switch (state) {
                     case STATE_FRESH:
-                        pageIndex = 0;
+                        pageIndex = 1;
                         break;
                     case STATE_MORE:
                         pageIndex++;
@@ -140,7 +151,7 @@ public class SecurityItemFragment extends Fragment {
                 }
                 //接口
                 Log.i(TAG, "type is " + type);
-                return "action/apiv2/banner?catalog=1&startrow=" + pageIndex + "&type=" + type + "&handle=" + handle;
+                return "amiwatergas/mobile/securityPlan/qryList?currentPage=" + pageIndex;
             }
 
             //            //是否加载更多的数据，根据业务逻辑自行判断，true表示有更多的数据，false表示没有更多的数据，如果不需要监听可以不重写该方法
@@ -172,26 +183,49 @@ public class SecurityItemFragment extends Fragment {
             public void onSuccess(SecurityBean o, Headers headers) {
                 //监听http请求成功，如果不需要监听可以不重新该方法
                 L.i("setLoadingDataListener onSuccess: " + o);
-                List<SecurityBean.ResultBean.ItemsBean> itemDatas = o.getItemDatas();
+                List<SecurityBean.ResultBean.DataListBean> itemDatas = o.getItemDatas();
                 if (itemDatas.size() == 0) {
-                    holder.loadingFinish((String) null);
+                    if(holder != null){
+                        holder.loadingFinish((String) null);
+                    }
                     if (myswipeRefreshLayout != null) {
                         myswipeRefreshLayout.setRefreshing(false);
                     }
+                    if(itemsBeanList.size() == 0){
+                        layout_NoData.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    for (SecurityBean.ResultBean.ItemsBean item : itemDatas) {
+                    for (SecurityBean.ResultBean.DataListBean item : itemDatas) {
                         itemsBeanList.add(item);
                     }
                 }
+                if(itemsBeanList.size() > 0){
+                    layout_NoData.setVisibility(View.GONE);
+                }
+                LoadingDialog.getInstance(contentView.getContext()).hide();
             }
 
             @Override
             public void onFailure() {
                 //监听http请求失败，如果不需要监听可以不重新该方法
+                LoadingDialog.getInstance(contentView.getContext()).hide();
+                if(itemsBeanList.size() == 0){
+                    layout_NoData.setVisibility(View.VISIBLE);
+                }
                 L.i("setLoadingDataListener onFailure");
             }
         });
-
+        pullToLoadMoreRecyclerView.setPageSize(10);
+        //添加头
+        pullToLoadMoreRecyclerView.putHeader("Authorization","Bearer " + Tool.getToken(contentView.getContext()));
+        pullToLoadMoreRecyclerView.putHeader("lang","en");
+        //添加请求参数
+        pullToLoadMoreRecyclerView.putParam("sidx", "id");
+        pullToLoadMoreRecyclerView.putParam("sord", "desc");
+        pullToLoadMoreRecyclerView.putParam("currentPage", pageIndex);
+        pullToLoadMoreRecyclerView.putParam("pageSize", 10);
+        pullToLoadMoreRecyclerView.putParam("repetition_flag", repetition_flag);
+        pullToLoadMoreRecyclerView.putParam("app_state", type);
         pullToLoadMoreRecyclerView.requestData();
     }
 }

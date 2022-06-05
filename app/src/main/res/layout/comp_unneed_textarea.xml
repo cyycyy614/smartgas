@@ -25,6 +25,7 @@
         android:layout_weight="1"
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"
+        android:textColor="@color/black"
         android:background="@drawable/rectangel_item"
         android:textSize="14dp"
         android:hint="请输入"

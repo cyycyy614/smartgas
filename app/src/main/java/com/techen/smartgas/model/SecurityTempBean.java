@@ -65,7 +65,7 @@ public class SecurityTempBean extends BasePageBean<SecurityTempBean.ResultBean.G
         private String template_code;
         private String state;
         private String state_name;
-        private Object sortcode;
+        private Integer sortcode;
         private List<GroupInfoListBean> groupInfoList;
 
         public Long getId() {
@@ -124,11 +124,11 @@ public class SecurityTempBean extends BasePageBean<SecurityTempBean.ResultBean.G
             this.state_name = state_name;
         }
 
-        public Object getSortcode() {
+        public Integer getSortcode() {
             return sortcode;
         }
 
-        public void setSortcode(Object sortcode) {
+        public void setSortcode(Integer sortcode) {
             this.sortcode = sortcode;
         }
 
@@ -216,14 +216,6 @@ public class SecurityTempBean extends BasePageBean<SecurityTempBean.ResultBean.G
 
             public static class ItemListBean {
                 private Long id;
-                private Object createuser;
-                private Object createon;
-                private Object createorgid;
-                private Object modifieduser;
-                private Object modifiedon;
-                private Object sortcode;
-                private Object description;
-                private Object enabled;
                 private Long template_id;
                 private Long group_id;
                 private String item_name;
@@ -241,6 +233,7 @@ public class SecurityTempBean extends BasePageBean<SecurityTempBean.ResultBean.G
                 private String hidden_danger_value;
                 private String rectification_method;
                 private String tableName;
+                private String key;
                 private List<String> declaredFieldNames;
 
                 public Long getId() {
@@ -251,69 +244,6 @@ public class SecurityTempBean extends BasePageBean<SecurityTempBean.ResultBean.G
                     this.id = id;
                 }
 
-                public Object getCreateuser() {
-                    return createuser;
-                }
-
-                public void setCreateuser(Object createuser) {
-                    this.createuser = createuser;
-                }
-
-                public Object getCreateon() {
-                    return createon;
-                }
-
-                public void setCreateon(Object createon) {
-                    this.createon = createon;
-                }
-
-                public Object getCreateorgid() {
-                    return createorgid;
-                }
-
-                public void setCreateorgid(Object createorgid) {
-                    this.createorgid = createorgid;
-                }
-
-                public Object getModifieduser() {
-                    return modifieduser;
-                }
-
-                public void setModifieduser(Object modifieduser) {
-                    this.modifieduser = modifieduser;
-                }
-
-                public Object getModifiedon() {
-                    return modifiedon;
-                }
-
-                public void setModifiedon(Object modifiedon) {
-                    this.modifiedon = modifiedon;
-                }
-
-                public Object getSortcode() {
-                    return sortcode;
-                }
-
-                public void setSortcode(Object sortcode) {
-                    this.sortcode = sortcode;
-                }
-
-                public Object getDescription() {
-                    return description;
-                }
-
-                public void setDescription(Object description) {
-                    this.description = description;
-                }
-
-                public Object getEnabled() {
-                    return enabled;
-                }
-
-                public void setEnabled(Object enabled) {
-                    this.enabled = enabled;
-                }
 
                 public Long getTemplate_id() {
                     return template_id;
@@ -449,6 +379,13 @@ public class SecurityTempBean extends BasePageBean<SecurityTempBean.ResultBean.G
 
                 public void setTableName(String tableName) {
                     this.tableName = tableName;
+                }
+                public String getKey() {
+                    return key;
+                }
+
+                public void setKey(String key) {
+                    this.key = key;
                 }
 
                 public List<String> getDeclaredFieldNames() {

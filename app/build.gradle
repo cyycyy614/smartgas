@@ -7,11 +7,10 @@ android {
 
     defaultConfig {
         applicationId "com.techen.smartgas"
-        minSdk 21
+        minSdk 24
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
-
+        versionCode 6
+        versionName "1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -19,6 +18,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "my_${releaseTime()}.apk"
+                }
+            }
         }
     }
     compileOptions {
@@ -28,6 +32,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+}
+
+def releaseTime(){
+    return new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC"));
 }
 
 dependencies {
@@ -60,6 +68,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    // fastjson
+    implementation 'com.alibaba:fastjson:1.2.37'
+    // 图表
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

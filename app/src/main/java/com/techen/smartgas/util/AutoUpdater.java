@@ -1,0 +1,345 @@
+package com.techen.smartgas.util;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
+
+import com.itheima.retrofitutils.listener.HttpResponseListener;
+import com.techen.smartgas.R;
+import com.techen.smartgas.model.SecurityUserDetailBean;
+import com.techen.smartgas.model.VersionBean;
+import com.techen.smartgas.views.security.SecurityAddActivity;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import okhttp3.Headers;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+
+public class AutoUpdater {
+    // 下载安装包的网络路径
+    private String apkUrl = "";
+    protected String checkUrl = apkUrl + "output-metadata.json";
+
+    // 保存APK的文件名
+    private static final String saveFileName = "my.apk";
+    private static File apkFile;
+
+    // 下载线程
+    private Thread downLoadThread;
+    private int progress;// 当前进度
+    // 应用程序Context
+    private Context mContext;
+    // 是否是最新的应用,默认为false
+    private boolean isNew = false;
+    private boolean intercept = false;
+    // 进度条与通知UI刷新的handler和msg常量
+    private ProgressBar mProgress;
+    private TextView txtStatus;
+
+    private static final int DOWN_UPDATE = 1;
+    private static final int DOWN_OVER = 2;
+    private static final int SHOWDOWN = 3;
+
+    public AutoUpdater(Context context) {
+        mContext = context;
+        apkFile = new File(mContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), saveFileName);
+    }
+
+    public void getLastData(int localVersionCode){
+        // amiwatergas/mobile/upgrade/getLastPackageInfo
+
+        RequestUtils request = new RequestUtils();
+        // get请求
+        Map<String, Object> getParams = new HashMap<>();
+        getParams.put("version", 1);
+        request.get("amiwatergas/mobile/upgrade/getLastPackageInfo", getParams, true, mContext, new HttpResponseListener<VersionBean>() {
+            @Override
+            public void onResponse(VersionBean bean, Headers headers) {
+                System.out.println("print data");
+                System.out.println("print data -- " + bean);
+                if(bean != null && bean.getCode() == 200) {
+                    String downloadUrl = bean.getResult().getDownload_url();
+                    String versionName = bean.getResult().getVersion_name();
+                    Integer versionValue = bean.getResult().getVersion_value();
+                    if (versionValue != null && versionValue > localVersionCode) {
+                        apkUrl = HttpService.BASE_FILE_URL + downloadUrl;
+                        if(TextUtils.isEmpty(apkUrl) || apkUrl.indexOf("http://") < -1){
+                            return;
+                        } else{
+                            mHandler.sendEmptyMessage(SHOWDOWN);
+                        }
+                    }
+                }
+            }
+
+            /**
+             * 可以不重写失败回调
+             * @param call
+             * @param e
+             */
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable e) {
+                System.out.println("print data -- " + e);
+            }
+        });
+
+    }
+
+    public void ShowUpdateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("软件版本更新");
+        builder.setMessage("有最新的软件包，请下载并安装!");
+        builder.setPositiveButton("立即下载", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ShowDownloadDialog();
+            }
+        });
+        builder.setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
+    }
+
+    private void ShowDownloadDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        dialog.setTitle("软件版本更新");
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View v = inflater.inflate(R.layout.layout_progress, null);
+        mProgress = (ProgressBar) v.findViewById(R.id.progress);
+        txtStatus = v.findViewById(R.id.txtStatus);
+        dialog.setView(v);
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                intercept = true;
+            }
+        });
+        dialog.show();
+        DownloadApk();
+    }
+
+    /**
+     * 获取当前本地apk的版本
+     *
+     * @param mContext
+     * @return
+     */
+    public static int getVersionCode(Context mContext) {
+        int versionCode = 0;
+        try {
+            //获取软件版本号，对应AndroidManifest.xml下android:versionCode
+            versionCode = mContext.getPackageManager().
+                    getPackageInfo(mContext.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+    /**
+     * 获取版本号名称
+     *
+     * @param context 上下文
+     * @return
+     */
+    public static String getVerName(Context context) {
+        String verName = "";
+        try {
+            verName = context.getPackageManager().
+                    getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return verName;
+    }
+
+
+    /**
+     * 检查是否更新的内容
+     */
+    public void CheckUpdate() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String localVersion = getVerName(mContext);
+                Integer localVersionCode = getVersionCode(mContext);
+
+                getLastData(localVersionCode);
+            }
+        }).start();
+    }
+
+    /**
+     * 从服务器下载APK安装包
+     */
+    public void DownloadApk() {
+        downLoadThread = new Thread(DownApkWork);
+        downLoadThread.start();
+    }
+
+    private Runnable DownApkWork = new Runnable() {
+        @Override
+        public void run() {
+            URL url;
+            try {
+                url = new URL(apkUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.connect();
+                int length = conn.getContentLength();
+                InputStream ins = conn.getInputStream();
+                FileOutputStream fos = new FileOutputStream(apkFile);
+                int count = 0;
+                byte[] buf = new byte[1024];
+                while (!intercept) {
+                    int numread = ins.read(buf);
+                    count += numread;
+                    progress = (int) (((float) count / length) * 100);
+                    // 下载进度
+                    mHandler.sendEmptyMessage(DOWN_UPDATE);
+                    if (numread <= 0) {
+                        // 下载完成通知安装
+                        mHandler.sendEmptyMessage(DOWN_OVER);
+                        break;
+                    }
+                    fos.write(buf, 0, numread);
+                }
+                fos.close();
+                ins.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    /**
+     * 安装APK内容
+     */
+    public void installAPK() {
+        try {
+            if (!apkFile.exists()) {
+                return;
+            }
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//安装完成后打开新版本
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // 给目标应用一个临时授权
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//判断版本大于等于7.0
+                //如果SDK版本>=24，即：Build.VERSION.SDK_INT >= 24，使用FileProvider兼容安装apk
+                String packageName = mContext.getApplicationContext().getPackageName();
+                String authority = new StringBuilder(packageName).append(".fileprovider").toString();
+                Uri apkUri = FileProvider.getUriForFile(mContext, authority, apkFile);
+                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+            }
+            mContext.startActivity(intent);
+            android.os.Process.killProcess(android.os.Process.myPid());//安装完之后会提示”完成” “打开”。
+
+
+        } catch (Exception e) {
+        }
+    }
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case SHOWDOWN:
+                    ShowUpdateDialog();
+                    break;
+                case DOWN_UPDATE:
+                    txtStatus.setText(progress + "%");
+                    mProgress.setProgress(progress);
+                    break;
+                case DOWN_OVER:
+                    Toast.makeText(mContext, "下载完毕", Toast.LENGTH_SHORT).show();
+                    installAPK();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    };
+
+    public static String doGet(String httpurl) {
+        HttpURLConnection connection = null;
+        InputStream is = null;
+        BufferedReader br = null;
+        String result = null;
+        try {
+            URL url = new URL(httpurl);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(15000);
+            connection.setReadTimeout(60000);
+            connection.connect();
+            if (connection.getResponseCode() == 200) {
+                is = connection.getInputStream();
+                br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                StringBuffer sbf = new StringBuffer();
+                String temp = null;
+                while ((temp = br.readLine()) != null) {
+                    sbf.append(temp);
+                    sbf.append("\r\n");
+                }
+                result = sbf.toString();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != br) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != is) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            connection.disconnect();
+        }
+        return result;
+
+    }
+}

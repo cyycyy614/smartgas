@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartGas</string>
+    <string name="app_name">智慧燃气</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -11,9 +11,14 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--    隐患上报检查页面-->
+    <string name="tip">尊敬的燃气用户，您好：</string>
+    <string name="tip1">根据国家《安全生产法》和《吉林省燃气管理条例》的有关规定，对你户的燃气设备进行检查时，发下存在以下隐患：</string>
+    <string name="needknow">请在7日内完成整改，因拒绝（延期）对燃气隐患进行整改造成燃气事故并有人员伤亡的，交由司法机关追查有关人员的法律责任。</string>
 
     <!--    安检计划-->
     <string name="status_issued">下发</string>
+    <string name="open_pre_record">上次安检记录</string>
     <string name="status_close">关闭</string>
     <string name="security_name">计划名称</string>
     <string name="start_time">开始日期:</string>
@@ -22,6 +27,25 @@
     <string name="security_count">安检户数:</string>
     <string name="rate">安检率:</string>
     <string name="state">计划状态:</string>
+    <string name="isrecheck">是否复检:</string>
+    <string name="xuan_user">已对用户进行安全宣传</string>
+    <string name="xuan_edit">已经告知用户对相关隐患进行整改</string>
+    <string name="submit">提交</string>
+    <string name="gobacklist">返回列表</string>
+    <string name="search">搜索</string>
+    <string name="handled">已处理</string>
+    <string name="unhandle">未处理</string>
+    <string name="closed">已关闭</string>
+
+    <!--    维修工单-->
+    <string name="w_code">代码线索</string>
+    <string name="w_source">工单来源:</string>
+    <string name="w_reporter">提报人:</string>
+    <string name="w_reporter_mobile">提报人手机:</string>
+    <string name="w_repairer">维修人:</string>
+    <string name="w_repairer_time">维修人时间:</string>
+    <string name="w_report_time">提报时间:</string>
+    <string name="w_repair_addr">报修地址:</string>
 
     <!--    用户列表-->
     <string name="username">用户名:</string>

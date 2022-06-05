@@ -14,7 +14,10 @@ import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 public interface HttpService {
-    String BASE_URL = "http://10.10.5.209:8012/";
+//    String BASE_URL = "http://10.10.108.163:8012/";
+    String BASE_URL = "http://smartgas.itechene.com:8012/";
+//    String BASE_FILE_URL = "http://10.10.5.209:9000/water-gas/";
+    String BASE_FILE_URL = "http://smartgas.itechene.com:9000/water-gas/";
 
     @Headers({"Content-Type: application/json"})
     @GET

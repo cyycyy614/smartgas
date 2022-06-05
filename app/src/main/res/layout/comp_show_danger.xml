@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_checkbox_need"
+    android:background="@drawable/rectangel_item"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/layout_item"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_item"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="非必填：">
+        </TextView>
+        <TextView
+            android:id="@+id/item_val"
+            android:layout_width="0.0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="非必填"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_method"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_method"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="整改方式：">
+        </TextView>
+        <TextView
+            android:id="@+id/text_method"
+            android:layout_width="0.0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="请选择"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_isreport"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_isreport"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="是否上报：">
+        </TextView>
+        <TextView
+            android:id="@+id/select_report"
+            android:layout_width="0.0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="请选择" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_textarea_unneed"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_textarea_unneed"
+            android:layout_centerVertical="true"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="隐患备注：">
+        </TextView>
+
+        <EditText
+            android:id="@+id/textarea"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rectangel_noborder_item"
+            android:textSize="14dp"
+            android:hint=""
+            android:lines="3"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_camera"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/label6"
+                android:gravity="right"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                app:prefix="*"
+                android:text="隐患拍照：">
+            </TextView>
+        </LinearLayout>
+        <org.apmem.tools.layouts.FlowLayout
+            android:id="@+id/flowlayout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dip"
+            android:paddingTop="20dip"
+            android:paddingRight="20dip"
+            android:paddingBottom="20dip"
+            android:orientation="horizontal"
+            android:background="@drawable/rectangel_item">
+
+        </org.apmem.tools.layouts.FlowLayout>
+    </LinearLayout>
+
+</LinearLayout>

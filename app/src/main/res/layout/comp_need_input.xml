@@ -26,6 +26,8 @@
         android:layout_centerVertical="true"
         android:ellipsize="end"
         android:inputType="text"
+        android:textColor="@color/black"
+        android:text="11"
         android:lines="1"
         android:background="@drawable/rectangel_item"
         android:hint="请输入"

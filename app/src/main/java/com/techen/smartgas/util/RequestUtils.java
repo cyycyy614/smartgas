@@ -1,11 +1,14 @@
 package com.techen.smartgas.util;
 
+import android.content.Context;
+
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.itheima.retrofitutils.listener.HttpResponseListener;
 
 import org.itheima.recycler.L;
-import org.json.JSONObject;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,15 +39,15 @@ public class RequestUtils {
         return service;
     }
 
-    public <T> void get(String url, Map<String,Object> getParams,Boolean isNeedToken, final HttpResponseListener<T> httpResponseListener){
+    public <T> void get(String url, Map<String,Object> getParams,Boolean isNeedToken, Context mContext,final HttpResponseListener<T> httpResponseListener){
         // get请求  "amiwatergas/mobile/securityTemplate/dataCodeList"
         if(isNeedToken){
-            addHeaders();
+            addHeaders(mContext);
         }
         if(service == null){
             newstance();
         }
-        service.get("amiwatergas/mobile/securityTemplate/dataCodeList",headers,getParams).enqueue(new Callback<ResponseBody>() {
+        service.get(url,headers,getParams).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -63,17 +66,18 @@ public class RequestUtils {
                     if (!String.class.equals(httpResponseListener.getType())) {
                         Gson gson = new Gson();
                         T t = gson.fromJson(json, httpResponseListener.getType());
-//                        try {
-//                            Class clz = Class.forName(t.getClass().getName());
-//                            Method getVal = clz.getMethod("getCode");
-//                            String code =  getVal.invoke(t).toString();
-//                            if(code.toString().equals("400")) {
-//                                L.i("test");
-//                                // 调用退出登录公用方法
-//                            }
-//                        } catch (ClassNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            Class clz = Class.forName(t.getClass().getName());
+                            Method getVal = clz.getMethod("getCode");
+                            String code =  getVal.invoke(t).toString();
+                            if(code.equals("400") || code.equals("401")) {
+                                L.i("test");
+                                // 调用退出登录公用方法
+                                Tool.Logout(mContext);
+                            }
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         httpResponseListener.onResponse(t, response.headers());
                     } else {
                         httpResponseListener.onResponse((T) json, response.headers());
@@ -94,27 +98,41 @@ public class RequestUtils {
     }
 
 
-    public <T> void post(String url,JSONObject paramObject,Boolean isNeedToken, final HttpResponseListener<T> httpResponseListener){
+    public <T> void post(String url, JSONObject paramObject, Boolean isNeedToken, Context mContext, final HttpResponseListener<T> httpResponseListener){
         // post请求  "amiwatergas/auth/login"
         if(isNeedToken){
-            addHeaders();
+            addHeaders(mContext);
         }
         if(service == null){
             newstance();
         }
         requestBody = RequestBody.create(MediaType.parse("application/json"), paramObject.toString());
-        service.post("amiwatergas/auth/login",headers,requestBody).enqueue(new Callback<ResponseBody>() {
+        service.post(url,headers,requestBody).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if(response.body() == null) {
                         L.i("response data: null" );
+                        httpResponseListener.onFailure(call, null);
                         return;
                     }
                     String json = response.body().string();
                     if (!String.class.equals(httpResponseListener.getType())) {
                         Gson gson = new Gson();
                         T t = gson.fromJson(json, httpResponseListener.getType());
+                        try {
+                            Class clz = Class.forName(t.getClass().getName());
+                            Method getVal = clz.getMethod("getCode");
+                            String code =  getVal.invoke(t).toString();
+
+                            if(code.equals("400") || code.equals("401")) {
+                                L.i("test");
+                                // 调用退出登录公用方法
+                                Tool.Logout(mContext);
+                            }
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         httpResponseListener.onResponse(t, response.headers());
                     } else {
                         httpResponseListener.onResponse((T) json, response.headers());
@@ -134,9 +152,9 @@ public class RequestUtils {
         });
     }
 
-    private void addHeaders(){
+    private void addHeaders(Context mContext){
         // 获取token，登录后从存储里面获取，增加一个公用的存储方法
-        String token = "9ceefe52-e4c6-4a50-9d6e-c44c9e011b0a";
+        String token = Tool.getToken(mContext);
         headers.put("Authorization","Bearer " + token);
         headers.put("lang","en");
     }

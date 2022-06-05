@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.techen.smartgas.R;
 import com.techen.smartgas.model.SecurityBean;
+import com.techen.smartgas.model.SecurityUserBean;
 import com.techen.smartgas.views.security.UserListFragment;
 
 import org.itheima.recycler.viewholder.BaseRecyclerViewHolder;
@@ -17,7 +18,7 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class UserListRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityBean.ResultBean.ItemsBean> {
+public class UserListRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityUserBean.ResultBean.DataListBean> {
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.username)
@@ -45,21 +46,22 @@ public class UserListRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityB
      */
     @Override
     public void onBindRealData() {
-        Random random_cus = new Random();
-        Integer cindex = random_cus.nextInt(2);
-        if (cindex == 0) {
+        if (mData.getState().equals("normal") || mData.getState().equals("danger")) {
             btnRecord.setVisibility(View.VISIBLE);
             btnEnter.setVisibility(View.GONE);
-        } else if (cindex == 1) {
+        } else if (mData.getState().equals("undo")) {
             btnRecord.setVisibility(View.GONE);
             btnEnter.setVisibility(View.VISIBLE);
+        } else{
+            btnRecord.setVisibility(View.GONE);
+            btnEnter.setVisibility(View.GONE);
         }
-        title.setText(mData.getName());
-        address.setText("青岛市李沧区**街道**号春和景园1期3号楼1单元101户");
-        mobile.setText("18955556666");
-        userno.setText("10%");
-        username.setText("正常");
-        userstatus.setText("正常");
+        title.setText(mData.getCons_addr());
+        address.setText(mData.getCons_addr());
+        mobile.setText(mData.getCons_tel());
+        userno.setText(mData.getCons_no());
+        username.setText(mData.getCons_name());
+        userstatus.setText(mData.getDispstate());
     }
 
 

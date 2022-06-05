@@ -26,6 +26,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/rectangel_item"
+        android:textColor="@color/black"
         android:textSize="14dp"
         android:hint="请输入"
         android:lines="3"

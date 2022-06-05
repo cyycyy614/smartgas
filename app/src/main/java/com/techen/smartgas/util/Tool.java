@@ -1,13 +1,21 @@
 package com.techen.smartgas.util;
 
+import static com.alibaba.fastjson.JSON.parseObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.TypeReference;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.techen.smartgas.login.LoginActivity;
 import com.techen.smartgas.model.SecurityTempBean;
 
 import java.io.BufferedReader;
@@ -17,6 +25,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Tool {
     /**
@@ -113,8 +122,121 @@ public class Tool {
         return stringBuilder.toString();
     }
 
-    public void Logout(Context context, Class<?> cls){
-        Intent i = new Intent(context,cls);
+    /**
+     * 对象转化为json fastjson 使用方式
+     *
+     * @return
+     */
+    public static String objectToJson(Object object) {
+        if (object == null) {
+            return "";
+        }
+        try {
+            return JSON.toJSONString(object);
+        } catch (JSONException e) {
+        } catch (Exception e) {
+        }
+        return "";
+    }
+
+    /**
+     * json转化为对象  fastjson 使用方式
+     *
+     * @return
+     */
+    public static <T> T jsonToObject(String jsonData, Class<T> clazz) {
+        T t = null;
+        if (TextUtils.isEmpty(jsonData)) {
+            return null;
+        }
+        try {
+            t = parseObject(jsonData, clazz);
+        } catch (Exception e) {
+            Log.i("to", String.valueOf(e));
+        }
+        return t;
+    }
+
+    public static <T> T jsonToObject1(final String json, final Type typeOfT) {
+        if (json != null) {
+            try {
+                return JSON.parseObject(json, typeOfT);
+            } catch (Exception e) {
+               Log.i("to", String.valueOf(e));
+            }
+        }
+        return null;
+    }
+
+    /**
+     * json转化为List<Person>或List<String>数据  fastjson 使用方式
+     *
+     * @param jsonData
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> jsonToArray(String jsonData, Class<T> clazz) {
+        List<T> list = null;
+        try {
+            list = JSON.parseArray(jsonData, clazz);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * json转化为List  fastjson 使用方式
+     */
+    public static List jsonToList(String jsonData) {
+        if (TextUtils.isEmpty(jsonData)) {
+            return null;
+        }
+        List arrayList = null;
+        try {
+            arrayList = parseObject(jsonData, new TypeReference<ArrayList>() {
+            });
+        } catch (Exception e) {
+        }
+        return arrayList;
+    }
+
+
+    /**
+     * json转化为Map  fastjson 使用方式
+     */
+    public static Map jsonToMap(String jsonData) {
+        if (TextUtils.isEmpty(jsonData)) {
+            return null;
+        }
+        Map map = null;
+        try {
+            map = parseObject(jsonData, new TypeReference<Map>() {
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    public static void Logout(Context context){
+        Intent i = new Intent(context, LoginActivity.class);
         context.startActivity(i);
+    }
+
+    public static String getToken(Context context){
+        String token = (String) SharedPreferencesUtil.get(context,"token","");
+//        token = "8c66780d-ee90-4909-bcf6-c71bf1d5822e";
+        return token;
+    }
+    public static void setToken(Context context,String token){
+        SharedPreferencesUtil.put(context,"token",token);
+    }
+
+    public static String getUserId(Context context){
+        String userid = (String) SharedPreferencesUtil.get(context,"userid","");
+        userid = "";
+        return userid;
     }
 }

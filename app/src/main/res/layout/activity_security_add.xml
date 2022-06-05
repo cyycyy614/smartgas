@@ -48,6 +48,18 @@
                     android:textColor="@android:color/background_dark"
                     android:textSize="16sp"
                     tools:text="@string/security_name" />
+                <Button
+                    android:id="@+id/btn_detail"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_status_issued"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    app:backgroundTint="@null"
+                    android:text="@string/open_pre_record"
+                    android:textColor="@color/status_issued"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

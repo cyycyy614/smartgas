@@ -30,6 +30,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ItheimaHttp.init(this, "https://www.oschina.net/");
+        ItheimaHttp.init(this, HttpService.BASE_URL);
+//        ItheimaHttp.init(this, "https://www.oschina.net/");
     }
 }

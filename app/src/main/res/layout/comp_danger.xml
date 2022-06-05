@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_checkbox_need"
     android:layout_width="match_parent"
+    android:background="@color/bg1"
     android:orientation="vertical"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
@@ -66,6 +67,113 @@
             android:paddingRight="5dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_camera"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/label6"
+                android:gravity="right"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                app:prefix="*"
+                android:text="隐患拍照：">
+            </TextView>
+        </LinearLayout>
+        <org.apmem.tools.layouts.FlowLayout
+            android:id="@+id/flowlayout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dip"
+            android:paddingTop="20dip"
+            android:paddingRight="20dip"
+            android:paddingBottom="20dip"
+            android:orientation="horizontal"
+            android:background="@drawable/rectangel_item">
+
+            <LinearLayout
+                android:id="@+id/upload"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/dashed_bg"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@android:string/unknownName"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/icon_pic" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="上传凭证"
+                    android:textColor="@color/gray"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="(最多6张)"
+                    android:textColor="@color/gray"
+                    android:textSize="10dp" />
+            </LinearLayout>
+        </org.apmem.tools.layouts.FlowLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_textarea"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_textarea"
+            android:layout_centerVertical="true"
+            android:layout_width="85dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            app:prefix="*"
+            android:text="隐患备注：">
+        </TextView>
+
+        <EditText
+            android:id="@+id/textarea"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rectangel_item"
+            android:textSize="14dp"
+            android:hint="请输入"
+            android:lines="3"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.techen.smartgas">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        android:minSdkVersion="30" />
+
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!-- 安装APK权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
+        android:debuggable="true"
         android:icon="@mipmap/icon"
+        android:versionCode ="1"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SmartGas">
+        android:theme="@style/Theme.SmartGas"
+        tools:ignore="HardcodedDebugMode">
         <activity
-            android:name=".views.security.SecurityAddActivity"
+            android:name=".views.workorder.WorkOrderAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.workorder.WorkOrderDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,13 +53,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.security.UserListActivity"
+            android:name=".login.IndexActivity"
+            android:exported="true" />
+        <activity
+            android:name=".login.IndexRepairmanActivity"
+            android:exported="true" />
+        <activity
+            android:name=".views.statistics.StatisticsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".views.security.SecurityDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".views.security.SecurityActivity"
-            android:exported="true">
-
-        </activity>
+            android:name=".views.workorder.WorkOrderListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.security.SecurityResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.security.SecurityConfirmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.security.SecuirtyDangerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.security.SecurityAddActivity"
+            android:exported="true" />
+        <activity
+            android:name=".views.security.UserListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".views.security.SecurityListActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

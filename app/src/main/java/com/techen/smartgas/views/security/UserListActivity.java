@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -34,7 +35,8 @@ public class UserListActivity extends AppCompatActivity {
     private List<String> tabIndicators;
     private List<Fragment> tabFragments;
     private ContentPagerAdapter contentAdapter;
-
+    String securityId;
+    private Integer repetition_flag = 0 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,10 @@ public class UserListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setTitle("用户列表");
 
+        //接受参数
+        Intent intent = getIntent();
+        securityId = intent.getStringExtra("id");
+        repetition_flag = intent.getIntExtra("repetition_flag", 0);
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
@@ -82,12 +88,21 @@ public class UserListActivity extends AppCompatActivity {
     private void initContent(){
         tabIndicators = new ArrayList<>();
         tabIndicators.add("全部");
-        tabIndicators.add("正常");
         tabIndicators.add("待安检");
+        tabIndicators.add("正常");
         tabIndicators.add("隐患");
+        tabIndicators.add("到访不遇");
+        tabIndicators.add("拒绝安检");
+        ArrayList tabCodeList = new ArrayList<>();
+        tabCodeList.add("");
+        tabCodeList.add("undo");
+        tabCodeList.add("normal");
+        tabCodeList.add("danger");
+        tabCodeList.add("miss");
+        tabCodeList.add("reject");
         tabFragments = new ArrayList<>();
         for(int i = 0;i < tabIndicators.size(); i ++){
-            tabFragments.add(UserListFragment.newInstance(i + ""));
+            tabFragments.add(UserListFragment.newInstance(securityId, (String) tabCodeList.get(i), repetition_flag));
         }
         contentAdapter = new UserListActivity.ContentPagerAdapter(getSupportFragmentManager(), getLifecycle());
         mContentVp.setAdapter(contentAdapter);

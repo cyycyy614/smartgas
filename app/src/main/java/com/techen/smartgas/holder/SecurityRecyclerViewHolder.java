@@ -1,5 +1,6 @@
 package com.techen.smartgas.holder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,7 +15,7 @@ import java.util.Random;
 
 import butterknife.BindView;
 
-public class SecurityRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityBean.ResultBean.ItemsBean> {
+public class SecurityRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityBean.ResultBean.DataListBean> {
     @BindView(R.id.st_title)
     TextView stTitle;
     @BindView(R.id.tag_1)
@@ -44,22 +45,24 @@ public class SecurityRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityB
      */
     @Override
     public void onBindRealData() {
-        Random random_cus = new Random();
-        Integer cindex =  random_cus.nextInt(2);
-        if(cindex == 0 ) {
+        if(mData.getState().equals("enable")) {
             tag1.setVisibility(View.VISIBLE);
             tag2.setVisibility(View.GONE);
-        } else if(cindex == 1 ) {
+        } else if(mData.getState().equals("closed")) {
             tag1.setVisibility(View.GONE);
             tag2.setVisibility(View.VISIBLE);
         }
-        stTitle.setText(mData.getName());
-        stStartdate.setText("2022-10-10");
-        stEnddate.setText("2022-10-10");
-        stPlaycount.setText("10");
-        stSecuritycount.setText("10");
-        stRate.setText("10%");
-        stState.setText("正常");
+        String startDate = mData.getStart_date();
+        startDate = TextUtils.isEmpty(startDate) ? "" : startDate.replace(" 00:00:00","");
+        String endDate = mData.getEnd_date();
+        endDate = TextUtils.isEmpty(endDate) ? "" : endDate.replace(" 00:00:00","");
+        stTitle.setText(mData.getPlan_name());
+        stStartdate.setText(startDate);
+        stEnddate.setText(endDate);
+        stPlaycount.setText(mData.getTotal_amount() + "");
+        stSecuritycount.setText(mData.getIn_amount() + "");
+        stRate.setText(mData.getRate());
+        stState.setText(mData.getDispstate());
     }
 
 
