@@ -84,7 +84,7 @@ public class OrderInfoBean {
             private String account_phone;
             private String mobile;
             private Object description;
-            private Integer worker_id;
+            private Long worker_id;
             private String order_code;
             private String disp_order_source;
             private Object danger_id;
@@ -93,9 +93,9 @@ public class OrderInfoBean {
             private String work_content;
             private String name;
             private String account_address;
-            private Integer id;
+            private Long id;
             private String state;
-            private Integer report_user_id;
+            private Long report_user_id;
             private String disp_state;
 
             public String getAppointment_time() {
@@ -130,11 +130,11 @@ public class OrderInfoBean {
                 this.description = description;
             }
 
-            public Integer getWorker_id() {
+            public Long getWorker_id() {
                 return worker_id;
             }
 
-            public void setWorker_id(Integer worker_id) {
+            public void setWorker_id(Long worker_id) {
                 this.worker_id = worker_id;
             }
 
@@ -202,11 +202,11 @@ public class OrderInfoBean {
                 this.account_address = account_address;
             }
 
-            public Integer getId() {
+            public Long getId() {
                 return id;
             }
 
-            public void setId(Integer id) {
+            public void setId(Long id) {
                 this.id = id;
             }
 
@@ -218,11 +218,11 @@ public class OrderInfoBean {
                 this.state = state;
             }
 
-            public Integer getReport_user_id() {
+            public Long getReport_user_id() {
                 return report_user_id;
             }
 
-            public void setReport_user_id(Integer report_user_id) {
+            public void setReport_user_id(Long report_user_id) {
                 this.report_user_id = report_user_id;
             }
 

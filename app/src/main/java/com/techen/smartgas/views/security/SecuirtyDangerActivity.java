@@ -89,6 +89,7 @@ public class SecuirtyDangerActivity extends AppCompatActivity {
                     // 打开确认页面
                     Intent i = new Intent(SecuirtyDangerActivity.this,SecurityConfirmActivity.class);
                     i.putExtra("plan_id", plan_id + "");
+                    i.putExtra("isdanger", list != null && list.size() > 0 ? "1" : "0");
                     LoadingDialog.setInstance(null);
                     SecurityAddActivity.instance.finish(); // 关掉安检入户页面
                     SecuirtyDangerActivity.this.finish(); // 关掉上一个页面

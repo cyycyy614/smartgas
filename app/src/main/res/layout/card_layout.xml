@@ -115,8 +115,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="张三"
+            android:text=""
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="提报人"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/order_name"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

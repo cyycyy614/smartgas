@@ -17,6 +17,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.techen.smartgas.R;
+import com.techen.smartgas.util.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,5 +126,9 @@ public class SecurityListActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    protected void onDestroy() {
+        LoadingDialog.setInstance(null);
+        super.onDestroy();
+    }
 }

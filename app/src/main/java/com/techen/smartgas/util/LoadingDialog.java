@@ -33,6 +33,9 @@ public class LoadingDialog extends Dialog {
     }
 
     public static void setInstance(LoadingDialog instance) {
+        if(instance == null && LoadingDialog.instance != null){
+            LoadingDialog.instance.dismiss();
+        }
         LoadingDialog.instance = instance;
     }
 

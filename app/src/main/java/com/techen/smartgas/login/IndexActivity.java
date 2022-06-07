@@ -43,6 +43,7 @@ import com.techen.smartgas.model.SecurityBean;
 import com.techen.smartgas.model.SecurityInfoBean;
 import com.techen.smartgas.model.TestBean;
 import com.techen.smartgas.util.AutoUpdater;
+import com.techen.smartgas.util.DateTimeHelper;
 import com.techen.smartgas.util.RequestUtils;
 import com.techen.smartgas.views.security.SecurityListActivity;
 import com.techen.smartgas.views.security.UserListActivity;
@@ -86,6 +87,8 @@ public class IndexActivity extends AppCompatActivity {
     private TextView totalAmount2;
     private TextView inAmount2;
     private Button dispState2;
+
+    SecurityInfoBean.ResultBean.LastSecurityPlanBean planBean;
 
     private ArrayList<Integer> colors;
     private ArrayList<PieEntry> entries;
@@ -292,6 +295,16 @@ public class IndexActivity extends AppCompatActivity {
                     goStatisticsList();
                     //统计分析
                     break;
+                case R.id.SecurityPlan_dispState:
+                    if(planBean != null){
+//                        Intent intent = new Intent(IndexActivity.this, UserListActivity.class);
+//                        intent.putExtra("id", planBean.get + "");
+//                        intent.putExtra("repetition_flag", repetition_flag);
+//                        intent.putExtra("code", stateCode);
+//                        startActivity(intent);
+                    }
+                    //下发
+                    break;
             }
         }
     };
@@ -380,8 +393,10 @@ public class IndexActivity extends AppCompatActivity {
                     if(lastSecurityPlanBean != null){
                         // 安检计划基础数据赋值
                         planName.setText(lastSecurityPlanBean.getPlanName());
-                        endDate.setText(lastSecurityPlanBean.getEndDate());
-                        startDate.setText(lastSecurityPlanBean.getStartDate());
+                        endDate.setText(DateTimeHelper.formatToString(lastSecurityPlanBean.getEndDate(),"yyyy-MM-dd"));
+                        String startDateStr = lastSecurityPlanBean.getStartDate();
+                        String formartStartDate = DateTimeHelper.formatToString(startDateStr,"yyyy-MM-dd");
+                        startDate.setText(formartStartDate);
                         repetitionAccountAmount.setText(lastSecurityPlanBean.getRepetitionAccountAmount().toString());
                         dangerAccountAmount.setText(lastSecurityPlanBean.getDangerAccountAmount().toString());
                         totalAmount.setText(lastSecurityPlanBean.getTotalAmount().toString());
@@ -391,6 +406,8 @@ public class IndexActivity extends AppCompatActivity {
                             SecurityInfoBean.ResultBean.LastSecurityPlanBean.RecordStateInfoBean recordStateInfoBean =   lastSecurityPlanBean.getRecordStateInfo();
                             setPieChartData(recordStateInfoBean);
                         }
+                        dispState.setOnClickListener(mListener);
+                        planBean = lastSecurityPlanBean;
                     }
                     //赋值方法
 //                安检计划和复检计划赋值图表赋值
@@ -398,16 +415,19 @@ public class IndexActivity extends AppCompatActivity {
                         //复检计划基础数据赋值
                         planName2.setText(lastRepetitionPlanBean.getPlanName());
                         endDate2.setText(lastRepetitionPlanBean.getEndDate());
-                        startDate2.setText(lastRepetitionPlanBean.getStartDate());
+                        String startDateStr = lastRepetitionPlanBean.getStartDate();
+                        String formartStartDate = DateTimeHelper.formatToString(startDateStr,"yyyy-MM-dd");
+                        startDate2.setText(formartStartDate);
                         repetitionAccountAmount2.setText(lastRepetitionPlanBean.getRepetitionAccountAmount().toString());
                         dangerAccountAmount2.setText(lastRepetitionPlanBean.getDangerAccountAmount().toString());
                         totalAmount2.setText(lastRepetitionPlanBean.getTotalAmount().toString());
                         inAmount2.setText(lastRepetitionPlanBean.getInAmount().toString());
-                        dispState2.setText(lastRepetitionPlanBean.getDispState());
+                        dispState2.setText(DateTimeHelper.formatToString(lastRepetitionPlanBean.getDispState(),"yyyy-MM-dd"));
                         if(lastRepetitionPlanBean.getRecordStateInfo() != null){
                             SecurityInfoBean.ResultBean.LastRepetitionPlanBean.RecordStateInfoBean recordStateInfoBean2 = lastRepetitionPlanBean.getRecordStateInfo();
                             setPieChartData2(recordStateInfoBean2);
                         }
+                        dispState2.setOnClickListener(mListener);
                     }
 
                 }
@@ -419,7 +439,6 @@ public class IndexActivity extends AppCompatActivity {
              */
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable e) {
-                System.out.println("print data -- " +  e);
                 Toast.makeText(IndexActivity.this, "获取数据出错了！", Toast.LENGTH_SHORT).show();
             }
         });

@@ -57,6 +57,7 @@ public class UserListFragment extends Fragment {
     private static final String EXTRA_CODE = "code";
     private static final String EXTRA_FLAG = "flag";
     private static final String EXTRA_SID = "securityId";
+    private static final String EXTRA_TYPE = "type";
     @BindView(R.id.plan_address)
     TextView planAddress;
     @BindView(R.id.plan_state)
@@ -87,6 +88,7 @@ public class UserListFragment extends Fragment {
     private Unbinder unbinder;
     private String code;
     private String securityId;
+    private String type;
     int mPosition = 0;
     private Integer repetition_flag = 0 ;
 
@@ -94,11 +96,12 @@ public class UserListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static UserListFragment newInstance(String securityId, String code, Integer flag) {
+    public static UserListFragment newInstance(String securityId, String code, Integer flag,String type) {
         Bundle arguments = new Bundle();
         arguments.putString(EXTRA_CODE, code);
         arguments.putString(EXTRA_SID, securityId);
         arguments.putInt(EXTRA_FLAG, flag);
+        arguments.putString(EXTRA_TYPE, type);
         UserListFragment userListFragment = new UserListFragment();
         userListFragment.setArguments(arguments);
         return userListFragment;
@@ -110,6 +113,7 @@ public class UserListFragment extends Fragment {
         if (getArguments() != null) {
             code = getArguments().getString(EXTRA_CODE);
             securityId = getArguments().getString(EXTRA_SID);
+            type = getArguments().getString(EXTRA_TYPE);
             repetition_flag = getArguments().getInt(EXTRA_FLAG, 0);
         }
     }
@@ -185,7 +189,12 @@ public class UserListFragment extends Fragment {
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 SecurityUserBean.ResultBean.DataListBean mData = itemsBeanList.get(position);
                 mPosition = position;
-                handleItemClick(mData,position);
+                String plan_state = mData.getPlan_state();
+                if(plan_state != null && !plan_state.equals("closed")) {
+                    handleItemClick(mData, position);
+                }else if(plan_state != null && plan_state.equals("closed")){
+                    Toast.makeText(contentView.getContext(), "该计划已经关闭！", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -227,6 +236,7 @@ public class UserListFragment extends Fragment {
                 //监听下啦刷新，如果不需要监听可以不重新该方法
                 L.i("setLoadingDataListener onRefresh");
                 state = STATE_FRESH;
+                itemsBeanList = new ArrayList<>();
             }
 
             @Override
@@ -253,6 +263,7 @@ public class UserListFragment extends Fragment {
                     }
                 } else {
                     for (SecurityUserBean.ResultBean.DataListBean item : itemDatas) {
+                        item.setType(type);
                         itemsBeanList.add(item);
                     }
                 }
@@ -292,11 +303,11 @@ public class UserListFragment extends Fragment {
         map1.put("img", "");
         map1.put("name", "待安检");
         map1.put("code", "undo");
-        Map map2 = new HashMap();
-        map2.put("img", "");
-//        map2.put("img",R.mipmap.icon_correct);
-        map2.put("name", "正常");
-        map2.put("code", "normal");
+//        Map map2 = new HashMap();
+//        map2.put("img", "");
+////        map2.put("img",R.mipmap.icon_correct);
+//        map2.put("name", "正常");
+//        map2.put("code", "normal");
         Map map3 = new HashMap();
         map3.put("img", "");
         map3.put("name", "到访不遇");
@@ -306,7 +317,7 @@ public class UserListFragment extends Fragment {
         map4.put("name", "拒绝安检");
         map4.put("code", "reject");
         datas.add(map1);
-        datas.add(map2);
+//        datas.add(map2);
         datas.add(map3);
         datas.add(map4);
         return datas;

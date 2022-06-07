@@ -68,70 +68,6 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:drawableLeft="@mipmap/icon_time"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@string/start_time"
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp"
-                tools:text="@string/start_time" />
-                <TextView
-                android:id="@+id/st_startdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:drawableLeft="@mipmap/icon_time"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@string/end_time"
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp"
-                tools:text="@string/end_time" />
-            <TextView
-                android:id="@+id/st_enddate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@android:color/background_dark"
-                android:textSize="14sp"/>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -243,6 +179,62 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@mipmap/icon_time"
+                    android:drawablePadding="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/time_range"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    tools:text="@string/time_range" />
+                <TextView
+                    android:id="@+id/st_startdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="至"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/st_enddate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text=""

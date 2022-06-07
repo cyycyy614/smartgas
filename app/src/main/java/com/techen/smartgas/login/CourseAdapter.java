@@ -18,11 +18,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.Viewholder
 
     private Context context;
     private ArrayList<CourseModel> courseModelArrayList;
+    private final OnItemClickListener listener;
 
     // Constructor
-    public CourseAdapter(Context context, ArrayList<CourseModel> courseModelArrayList) {
+    public CourseAdapter(Context context, ArrayList<CourseModel> courseModelArrayList, OnItemClickListener listener) {
         this.context = context;
         this.courseModelArrayList = courseModelArrayList;
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(CourseModel item);
     }
 
     @NonNull
@@ -44,7 +50,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.Viewholder
         holder.order_account_address.setText(model.getOrder_account_address());
         holder.order_source.setText(model.getOrder_source());
 
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                listener.onItemClick(model);
+            }
+        });
 //        holder.courseIV.setImageResource(model.getCourse_image());
     }
 
@@ -73,6 +83,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.Viewholder
             order_account_address = itemView.findViewById(R.id.order_account_address);
             order_source = itemView.findViewById(R.id.order_source);
             order_disp_state=itemView.findViewById(R.id.order_disp_state);
+
         }
     }
 }

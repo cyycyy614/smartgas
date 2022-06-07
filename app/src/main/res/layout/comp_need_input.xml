@@ -15,7 +15,8 @@
         android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="使用年限限限："
+        android:gravity="right"
+        android:text="使用："
         app:prefix="*"></com.techen.smartgas.widget.RequiredTextView>
 
     <EditText
@@ -27,7 +28,7 @@
         android:ellipsize="end"
         android:inputType="text"
         android:textColor="@color/black"
-        android:text="11"
+        android:text=""
         android:lines="1"
         android:background="@drawable/rectangel_item"
         android:hint="请输入"

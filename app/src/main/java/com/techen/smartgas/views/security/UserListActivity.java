@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.techen.smartgas.R;
+import com.techen.smartgas.util.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class UserListActivity extends AppCompatActivity {
     private List<Fragment> tabFragments;
     private ContentPagerAdapter contentAdapter;
     String securityId;
+    String code;
     private Integer repetition_flag = 0 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class UserListActivity extends AppCompatActivity {
         //接受参数
         Intent intent = getIntent();
         securityId = intent.getStringExtra("id");
+        code = intent.getStringExtra("code");
         repetition_flag = intent.getIntExtra("repetition_flag", 0);
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
@@ -102,7 +105,7 @@ public class UserListActivity extends AppCompatActivity {
         tabCodeList.add("reject");
         tabFragments = new ArrayList<>();
         for(int i = 0;i < tabIndicators.size(); i ++){
-            tabFragments.add(UserListFragment.newInstance(securityId, (String) tabCodeList.get(i), repetition_flag));
+            tabFragments.add(UserListFragment.newInstance(securityId, (String) tabCodeList.get(i), repetition_flag,code));
         }
         contentAdapter = new UserListActivity.ContentPagerAdapter(getSupportFragmentManager(), getLifecycle());
         mContentVp.setAdapter(contentAdapter);
@@ -124,5 +127,11 @@ public class UserListActivity extends AppCompatActivity {
             return tabIndicators.size();
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        LoadingDialog.setInstance(null);
+        super.onDestroy();
     }
 }

@@ -64,6 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -118,7 +119,7 @@
                 android:layout_height="14dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="86dp"
-                android:text="2022"
+                android:text=""
                 android:textSize="10sp"
                 app:layout_constraintStart_toEndOf="@+id/textView17"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -129,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="72dp"
-                android:text="0"
+                android:text=""
                 android:textSize="10sp"
                 app:layout_constraintStart_toEndOf="@+id/textView14"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -241,7 +242,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="32dp"
-                android:text="2022-05-16"
+                android:text=""
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -313,7 +314,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="84dp"
-                android:text="0"
+                android:text=""
                 android:textSize="10sp"
                 app:layout_constraintStart_toEndOf="@+id/plan2_5"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -379,7 +380,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
-                android:text="2022-05-16"
+                android:text=""
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

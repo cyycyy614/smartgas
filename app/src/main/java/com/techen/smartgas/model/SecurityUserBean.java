@@ -109,11 +109,21 @@ public class SecurityUserBean extends BasePageBean<SecurityUserBean.ResultBean.D
             private String cons_addr;
             private String dispstate;
             private String cons_no;
+            private String type;
             private Long template_id;
             private String cons_name;
             private String state;
             private Long record_id;
             private Long cons_id;
+            private String plan_state;
+
+            public String getPlan_state() {
+                return plan_state;
+            }
+
+            public void setPlan_state(String plan_state) {
+                this.plan_state = plan_state;
+            }
 
             public String getCons_tel() {
                 return cons_tel;
@@ -121,6 +131,14 @@ public class SecurityUserBean extends BasePageBean<SecurityUserBean.ResultBean.D
 
             public void setCons_tel(String cons_tel) {
                 this.cons_tel = cons_tel;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
             }
 
             public String getCons_addr() {

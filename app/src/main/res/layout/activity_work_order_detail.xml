@@ -25,7 +25,7 @@
                     android:id="@+id/w_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="真三"
+                    android:text=""
                     android:textSize="18dp"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="18512346598"
+                    android:text=""
                     android:textColor="@color/blue"
                     android:textSize="12dp"/>
                 <LinearLayout
@@ -56,7 +56,7 @@
                         android:text="@string/handled"
                         android:textColor="@color/status_issued"
                         android:textSize="12sp"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
                     <Button
                         android:id="@+id/tag_unhandle"
                         android:layout_width="60dp"
@@ -109,7 +109,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="测试"
+                    android:text=""
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
@@ -134,7 +134,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="测试"
+                    android:text=""
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
@@ -159,7 +159,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="测试"
+                    android:text=""
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
@@ -184,7 +184,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="测试"
+                    android:text=""
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
@@ -209,7 +209,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="测试"
+                    android:text=""
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
@@ -234,7 +234,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="测试"
+                    android:text=""
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
@@ -259,7 +259,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="青岛市李沧区**街道**号春和景园1期3号楼1010"
+                    android:text=""
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
@@ -271,7 +271,55 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="85dp"
+                    android:gravity="right"
+                    android:layout_height="wrap_content"
+                    android:text="报修内容：">
+                </TextView>
+                <TextView
+                    android:id="@+id/w_const"
+                    android:layout_width="0.0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text=""
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorBorder"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:gravity="right"
+                    android:textSize="18dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="维修记录">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="85dp"
@@ -279,42 +327,42 @@
                     android:layout_height="wrap_content"
                     android:text="维修内容：">
                 </TextView>
-                <LinearLayout
-                    android:id="@+id/layout_work_cont"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="wrap_content"
-                    android:text="测试"
-                    android:orientation="vertical"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp" >
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="85dp"
-                    android:gravity="right"
-                    android:layout_height="wrap_content"
-                    android:text="备注：">
-                </TextView>
                 <TextView
                     android:id="@+id/textarea"
                     android:layout_width="0.0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="青岛市李沧区**街道**号春和景园1期3号楼1010"
+                    android:text=""
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_work_cont"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp" >
+
+                <org.apmem.tools.layouts.FlowLayout
+                    android:id="@+id/flowlayout"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="20dip"
+                    android:paddingTop="20dip"
+                    android:paddingRight="20dip"
+                    android:paddingBottom="20dip"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rectangel_item">
+
+                </org.apmem.tools.layouts.FlowLayout>
             </LinearLayout>
 
         </LinearLayout>

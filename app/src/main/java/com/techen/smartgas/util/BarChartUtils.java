@@ -38,8 +38,11 @@ public class BarChartUtils {
         chart.setDoubleTapToZoomEnabled(false);
         chart.setPinchZoom(false);
         Description description = chart.getDescription();
-        description.setEnabled(false);
-        description.setText("安检率");
+        description.setEnabled(true);
+        description.setPosition(100,40);
+//        description.setYOffset(20);
+        description.setText("入户率");
+        description.setTextSize(14);
         chart.setDescription(description);
         chart.setDragDecelerationEnabled(false);
         chart.setDragDecelerationFrictionCoef(1f);
@@ -82,7 +85,7 @@ public class BarChartUtils {
         xAxis.setDrawGridLines(true);//是否画网格线
         xAxis.setGridColor(Color.GRAY);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);// 设置x轴数据的位置
-        xAxis.setTextSize(14);//设置轴标签字体大小
+        xAxis.setTextSize(12);//设置轴标签字体大小
         xAxis.setLabelRotationAngle(-35);
         xAxis.setTextColor(Color.parseColor("#000000"));//设置轴标签字体的颜色
 

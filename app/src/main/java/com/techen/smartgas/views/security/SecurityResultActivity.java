@@ -50,12 +50,13 @@ public class SecurityResultActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_goback:
-
+                    btnGoback.setEnabled(false);
                     // 打开列表页面
                     Intent intent = new Intent(SecurityResultActivity.this, UserListActivity.class);
                     intent.putExtra("id", plan_id);
                     SecurityResultActivity.this.finish();
                     startActivity(intent);
+                    btnGoback.setEnabled(true);
                     break;
             }
         }

@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,6 +122,8 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
     RelativeLayout activityRootview;
     @BindView(R.id.scrollvie_ll)
     LinearLayout mScrollCont;
+    @BindView(R.id.scrollview)
+    ScrollView mScrollView;
 
     String template_id;
     String plan_id;
@@ -142,6 +145,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
     private Integer repetition_flag = 0 ;
     // 存储动态添加控件的id
     public static final Map<String, Integer> ITEM_MAP = new HashMap<String, Integer>();
+    public static final Map<String, Integer> ITEM_G_MAP = new HashMap<String, Integer>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -526,14 +530,12 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
                         }
                         break;
                     case "radio":
+                    case "checkbox":
                         if(dangerJudge.equals("equal")){
                             if(curVal.equals(dangerVal)){
                                 return true;
                             }
                         }
-                        break;
-                    case "checkbox":
-
                         break;
                     case "date":
                         if(dangerJudge.equals("equal")){
@@ -593,7 +595,14 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
             // 为item绑定数据
             view.setTag(id + "-" + i);
             // 为item设置点击事件
-            view.setOnClickListener(this);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer resId = ITEM_MAP.get(group.getId() + "");
+                    LinearLayout layout =  (LinearLayout)mScrollView.findViewById(resId);
+                    mScrollView.scrollTo(0,layout.getTop());
+                }
+            });
             // 把item添加到父view中
             mLinearLayout.addView(view);
 
@@ -615,10 +624,14 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         generate_title(view,group);
         for (int i = 0; i < itemList.size(); i++) {
             SecurityTempBean.ResultBean.GroupInfoListBean.ItemListBean itemBean = itemList.get(i);
+            String itemId = itemBean.getId() + "";
             String code = itemBean.getItem_code();
             String type = itemBean.getItem_type();
-            String key = code + "-" + type;
+            String key = itemId + "-" + type;
             itemBean.setKey(key);
+            if(itemBean.getVisible_flag() != null && itemBean.getVisible_flag() == 0){
+
+            }
             switch (itemBean.getItem_type()){
                 case "input":
                     initInput(view, itemBean);
@@ -650,6 +663,10 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         TextView group_name = (TextView) linearLayout_group.findViewById(R.id.group_name);
         group_name.setText(group.getGroup_name());
         removeView(linearLayout_group);
+
+        int id = View.generateViewId();
+        linearLayout_group.setId(id);
+        ITEM_MAP.put(group.getId() + "", id);
         mScrollCont.addView(linearLayout_group);
     }
 
@@ -852,7 +869,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
             }
         }
         Boolean isChecked = false;
-        if(!TextUtils.isEmpty(itemBean.getDefault_value()) && itemBean.getDefault_value().equals('1')){
+        if(!TextUtils.isEmpty(itemBean.getDefault_value()) && itemBean.getDefault_value().equals("1")){
             isChecked = true;
         }
         switch_comp.setChecked(isChecked);
@@ -864,13 +881,16 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         mScrollCont.addView(layout_radio);
         if(itemBean.getHidden_danger_flag() !=null && itemBean.getHidden_danger_flag() == 1) {
             LinearLayout layout_danger = dangerMethodItem(view,itemBean);
-            layout_danger.setVisibility(View.GONE);
+            if(isDanger(itemBean,isChecked ? "1" : "0")){
+                layout_danger.setVisibility(View.VISIBLE);
+            } else {
+                layout_danger.setVisibility(View.GONE);
+            }
             mScrollCont.addView(layout_danger);
             switch_comp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Log.v("Switch State=", ""+isChecked);
-                    if(isChecked){
+                    if(isDanger(itemBean,isChecked ? "1" : "0")){
                         layout_danger.setVisibility(View.VISIBLE);
                     } else {
                         layout_danger.setVisibility(View.GONE);
@@ -953,21 +973,55 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
             TextView label_unneed = (TextView) layout.findViewById(R.id.label_checkbox_unneed);
             label_unneed.setText(itemBean.getItem_name() + ":");
         }
-        generate_checkbox(optionList,layout,itemBean);
-
-        mScrollCont.addView(layout);
+        generate_checkbox(optionList,layout,itemBean,view);
     }
 
-    private void generate_checkbox(List<OptionBean> optionList,LinearLayout layout,SecurityTempBean.ResultBean.GroupInfoListBean.ItemListBean itemBean){
+    private void generate_checkbox(List<OptionBean> optionList,LinearLayout layout,SecurityTempBean.ResultBean.GroupInfoListBean.ItemListBean itemBean,View view){
+        LinearLayout layout_danger = null;
+        if(itemBean.getHidden_danger_flag() !=null && itemBean.getHidden_danger_flag() == 1) {
+            layout_danger = dangerMethodItem(view,itemBean);
+        }
         for(OptionBean bean : optionList){
             CheckBox cb = new CheckBox(getApplicationContext());
             cb.setText(bean.getLabel());
             cb.setTag(bean.getValue());
+            if(!TextUtils.isEmpty(itemBean.getDefault_value()) && itemBean.getDefault_value().equals(bean.getValue())){
+                cb.setChecked(true);
+                if(layout_danger != null){
+                    if(isDanger(itemBean,bean.getValue())){
+                        layout_danger.setVisibility(View.VISIBLE);
+                    } else {
+                        layout_danger.setVisibility(View.GONE);
+                    }
+                }
+            }
             int id = View.generateViewId();
             cb.setId(id);
             ITEM_MAP.put(itemBean.getKey() + bean.getValue(), id);
             layout.addView(cb);
+            LinearLayout finalLayout_danger = layout_danger;
+            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Log.v("Switch State=", ""+isChecked);
+                    String defaultVal = (String) buttonView.getTag();
+                    if(finalLayout_danger != null){
+                        if(isChecked && isDanger(itemBean,defaultVal)){
+                            finalLayout_danger.setVisibility(View.VISIBLE);
+                        } else {
+                            finalLayout_danger.setVisibility(View.GONE);
+                        }
+                    }
+
+                }
+
+            });
         }
+        mScrollCont.addView(layout);
+        if(layout_danger != null){
+            mScrollCont.addView(layout_danger);
+        }
+
     }
 
     private OptionBean getValByItemId(String selectedVal,List<OptionBean> optionList){
@@ -986,6 +1040,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         String option_str = itemBean.getItem_option();
         List<OptionBean> optionList = Tool.toArray(option_str, OptionBean.class);
         TextView select_t;
+        String defaultVal = "";
         if(itemBean.getRequired_flag() == 1) {
             // 必须 layout_need_input
             LinearLayout layout_need_select = (LinearLayout)  LayoutInflater.from(this).inflate(R.layout.comp_need_select, null,false);
@@ -999,6 +1054,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
                 if(selectedBean != null){
                     select_t.setText(selectedBean.getLabel());
                     select_t.setTag(selectedBean.getValue());
+                    defaultVal = selectedBean.getValue();
                 }
             }
             int id = View.generateViewId();
@@ -1018,6 +1074,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
                 if(selectedBean != null){
                     select_t.setText(selectedBean.getLabel());
                     select_t.setTag(selectedBean.getValue());
+                    defaultVal = selectedBean.getValue();
                 }
             }
             int id = View.generateViewId();
@@ -1030,7 +1087,11 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         LinearLayout layout_danger = null;
         if(itemBean.getHidden_danger_flag() !=null && itemBean.getHidden_danger_flag() == 1) {
             layout_danger = dangerMethodItem(view,itemBean);
-            layout_danger.setVisibility(View.GONE);
+            if(!TextUtils.isEmpty(defaultVal) && isDanger(itemBean,defaultVal) ){
+                layout_danger.setVisibility(View.VISIBLE);
+            } else {
+                layout_danger.setVisibility(View.GONE);
+            }
             mScrollCont.addView(layout_danger);
         }
         initOptionPicker(select_t,optionList,itemBean,layout_danger);
@@ -1040,6 +1101,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         String option_str = itemBean.getItem_option();
         List<OptionBean> optionList = Tool.toArray(option_str, OptionBean.class);
         TextView date_tx ;
+        String defaultVal = "";
         if(itemBean.getRequired_flag() == 1) {
             // 必须 layout_need_date
             LinearLayout layout_need_date = (LinearLayout)  LayoutInflater.from(this).inflate(R.layout.comp_need_date, null,false);
@@ -1049,6 +1111,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
             date_tx.setHint(TextUtils.isEmpty(itemBean.getPlaceholder()) ? "请选择日期" : itemBean.getPlaceholder());
             if(!TextUtils.isEmpty(itemBean.getDefault_value())){
                 date_tx.setText(itemBean.getDefault_value());
+                defaultVal = itemBean.getDefault_value();
             }
             int id = View.generateViewId();
             date_tx.setId(id);
@@ -1064,6 +1127,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
             date_tx.setHint(TextUtils.isEmpty(itemBean.getPlaceholder()) ? "请选择日期" : itemBean.getPlaceholder());
             if(!TextUtils.isEmpty(itemBean.getDefault_value())){
                 date_tx.setText(itemBean.getDefault_value());
+                defaultVal = itemBean.getDefault_value();
             }
             int id = View.generateViewId();
             date_tx.setId(id);
@@ -1076,7 +1140,12 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         LinearLayout layout_danger = null;
         if(itemBean.getHidden_danger_flag() !=null && itemBean.getHidden_danger_flag() == 1) {
             layout_danger = dangerMethodItem(view,itemBean);
-            layout_danger.setVisibility(View.GONE);
+
+            if(!TextUtils.isEmpty(defaultVal) && isDanger(itemBean,defaultVal) ){
+                layout_danger.setVisibility(View.VISIBLE);
+            } else {
+                layout_danger.setVisibility(View.GONE);
+            }
             mScrollCont.addView(layout_danger);
         }
         initDatePicker(date_tx,itemBean,layout_danger);

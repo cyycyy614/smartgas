@@ -1,5 +1,6 @@
 package com.techen.smartgas.views.workorder;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -119,11 +120,11 @@ public class WorkOrderListFragment extends Fragment {
                 if(stateCode.equals("handling")){
                     Intent intent = new Intent(contentView.getContext(), WorkOrderAddActivity.class);
                     intent.putExtra("id", id + "");
-                    startActivity(intent);
+                    startActivityForResult(intent,GET_CODE);
                 }else{
                     Intent intent = new Intent(contentView.getContext(), WorkOrderDetailActivity.class);
                     intent.putExtra("id", id + "");
-                    startActivity(intent);
+                    startActivityForResult(intent,GET_CODE);
                 }
             }
         });
@@ -167,6 +168,7 @@ public class WorkOrderListFragment extends Fragment {
                 //监听下啦刷新，如果不需要监听可以不重新该方法
                 L.i("setLoadingDataListener onRefresh");
                 state = STATE_FRESH;
+                itemsBeanList = new ArrayList<>();
             }
 
             @Override
@@ -222,5 +224,15 @@ public class WorkOrderListFragment extends Fragment {
         pullToLoadMoreRecyclerView.putParam("pageSize", 10);
         pullToLoadMoreRecyclerView.putParam("state", type);
         pullToLoadMoreRecyclerView.requestData();
+    }
+    static final private int GET_CODE = 0;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        if (requestCode == GET_CODE && resultCode == Activity.RESULT_OK) {
+            //加载数据
+            itemsBeanList = new ArrayList<>();
+            pullToLoadMoreRecyclerView.onRefresh();
+        }
     }
 }

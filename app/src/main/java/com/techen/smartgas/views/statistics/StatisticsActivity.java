@@ -1,5 +1,6 @@
 package com.techen.smartgas.views.statistics;
 
+import android.icu.text.DecimalFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -43,6 +44,7 @@ import com.techen.smartgas.util.Tool;
 import com.techen.smartgas.views.security.SecurityAddActivity;
 import com.techen.smartgas.views.security.SecurityConfirmActivity;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -420,7 +422,10 @@ public class StatisticsActivity extends AppCompatActivity {
                 planName = planName.substring(0,10);
             }
             netDateList.add(planName);
-            netBarList.add(new BarEntry((float) i, (float)bean.getRate() * 100));
+            Float rate = bean.getRate();
+            BigDecimal bd = new BigDecimal(rate * 100);
+            float value = bd.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+            netBarList.add(new BarEntry((float) i, (float)value));
             i++;
         }
 

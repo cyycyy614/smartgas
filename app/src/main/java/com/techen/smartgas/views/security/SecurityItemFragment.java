@@ -124,10 +124,11 @@ public class SecurityItemFragment extends Fragment {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Long id = itemsBeanList.get(position).getId();
-                String name = itemsBeanList.get(position).getPlan_name();
+                String stateCode = itemsBeanList.get(position).getState();
                 Intent intent = new Intent(contentView.getContext(), UserListActivity.class);
                 intent.putExtra("id", id+"");
                 intent.putExtra("repetition_flag", repetition_flag);
+                intent.putExtra("code", stateCode);
                 startActivity(intent);
             }
         });
@@ -171,6 +172,7 @@ public class SecurityItemFragment extends Fragment {
                 //监听下啦刷新，如果不需要监听可以不重新该方法
                 L.i("setLoadingDataListener onRefresh");
                 state = STATE_FRESH;
+                itemsBeanList = new ArrayList<>();
             }
 
             @Override

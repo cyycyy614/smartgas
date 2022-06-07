@@ -4,7 +4,7 @@ public class CourseModel {
 
     private String order_name;
 
-    public CourseModel(String order_name, String order_mobile, String order_code, String order_report_time, String order_account_address, String order_source, String order_disp_state) {
+    public CourseModel(Long work_id,String state, String order_name, String order_mobile, String order_code, String order_report_time, String order_account_address, String order_source, String order_disp_state) {
         this.order_name = order_name;
         this.order_mobile = order_mobile;
         this.order_code = order_code;
@@ -12,6 +12,8 @@ public class CourseModel {
         this.order_account_address = order_account_address;
         this.order_source = order_source;
         this.order_disp_state = order_disp_state;
+        this.work_id = work_id;
+        this.state = state;
     }
 
     public String getOrder_name() {
@@ -20,6 +22,14 @@ public class CourseModel {
 
     public void setOrder_name(String order_name) {
         this.order_name = order_name;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getOrder_mobile() {
@@ -69,6 +79,13 @@ public class CourseModel {
     public void setOrder_disp_state(String order_disp_state) {
         this.order_disp_state = order_disp_state;
     }
+    public Long getWork_id() {
+        return work_id;
+    }
+
+    public void setWork_id(Long work_id) {
+        this.work_id = work_id;
+    }
 
     private String order_mobile;
     private String order_code;
@@ -76,6 +93,8 @@ public class CourseModel {
     private String order_account_address;
     private String order_source;
     private String order_disp_state;
+    private String state;
+    private Long work_id;
 
 
 }

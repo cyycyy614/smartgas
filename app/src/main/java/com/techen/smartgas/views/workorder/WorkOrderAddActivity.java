@@ -101,6 +101,8 @@ public class WorkOrderAddActivity extends AppCompatActivity {
     TextView wOrderTime;
     @BindView(R.id.w_addr)
     TextView wAddr;
+    @BindView(R.id.w_const)
+    TextView wConst;
     @BindView(R.id.layout_work_cont)
     LinearLayout layoutWorkCont;
     @BindView(R.id.textarea)
@@ -109,6 +111,10 @@ public class WorkOrderAddActivity extends AppCompatActivity {
     Button btnSubmit;
     @BindView(R.id.activity_rootview)
     ScrollView activity_rootview;
+    @BindView(R.id.flowlayout)
+    FlowLayout flowlayout;
+    @BindView(R.id.upload)
+    LinearLayout upload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,14 +190,9 @@ public class WorkOrderAddActivity extends AppCompatActivity {
             Toast.makeText(WorkOrderAddActivity.this, "请输入备注", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(imgList != null && imgList.size() > 0){
-            for(Long key : imgList.keySet()){
-                ArrayList singleImgList = imgList.get(key);
-                if(singleImgList == null || singleImgList.size() == 0){
-                    Toast.makeText(WorkOrderAddActivity.this, "请上传图片", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            }
+        if(imgList != null && imgList.size() == 0){
+            Toast.makeText(WorkOrderAddActivity.this, "请上传图片", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return  true;
     }
@@ -202,22 +203,12 @@ public class WorkOrderAddActivity extends AppCompatActivity {
             return;
         }
         RequestUtils request = new RequestUtils();
-        ArrayList<Map<String,String>> paraList = new ArrayList<Map<String,String>>();
-        if(imgList != null && imgList.size() > 0){
-            for(Long key : imgList.keySet()){
-                ArrayList singleImgList = imgList.get(key);
-                Map<String,String> obj = new HashMap<>();
-                obj.put("work_order_id",key + "");
-                obj.put("repairUrl",TextUtils.join(",", singleImgList));
-                paraList.add(obj);
-            }
-        }
         // get请求
         JSONObject paramObject = new JSONObject();
         try {
             paramObject.put("id",workId);
-            paramObject.put("description",textarea.getText());
-            paramObject.put("paraList",paraList);
+            paramObject.put("repair_content",textarea.getText());
+            paramObject.put("repairUrl",TextUtils.join(",", imgList));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -233,6 +224,7 @@ public class WorkOrderAddActivity extends AppCompatActivity {
                         return;
                     }
                     Toast.makeText(WorkOrderAddActivity.this, "提交成功了！！", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
                     WorkOrderAddActivity.this.finish();
                 }else{
                     Toast.makeText(WorkOrderAddActivity.this, "提交失败了！！", Toast.LENGTH_SHORT).show();
@@ -246,6 +238,7 @@ public class WorkOrderAddActivity extends AppCompatActivity {
              */
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable e) {
+                LoadingDialog.getInstance(WorkOrderAddActivity.this).hide();
                 Toast.makeText(WorkOrderAddActivity.this, "提交失败了！！", Toast.LENGTH_SHORT).show();
             }
         });
@@ -276,84 +269,50 @@ public class WorkOrderAddActivity extends AppCompatActivity {
         wUsername.setText(resultBean.getReporter_name() + "");
         wReporterMobile.setText(resultBean.getAccount_phone() + "");
         wReportTime.setText(resultBean.getReport_time() + "");
-//        textarea.setText(resultBean.getWork_content() + "");
+        wConst.setText(resultBean.getWork_content() + "");
 
         List<WorkOrderDetailBean.ResultBean.WorkInfoBean> workInfoBeanList = resultBean.getWorkInfo();
-//        WorkOrderDetailBean.ResultBean.WorkInfoBean workInfoBean = new WorkOrderDetailBean.ResultBean.WorkInfoBean();
-//        workInfoBean.setWork_order_id(Long.parseLong("111"));
-//        workInfoBean.setRepair_content("维修管道");
-//        workInfoBeanList.add(workInfoBean);
-//        workInfoBean = new WorkOrderDetailBean.ResultBean.WorkInfoBean();
-//        workInfoBean.setWork_order_id(Long.parseLong("222"));
-//        workInfoBean.setRepair_content("消除腐蚀");
-//        workInfoBeanList.add(workInfoBean);
         if(workInfoBeanList != null && workInfoBeanList.size() > 0){
             generate_camera(resultBean.getWorkInfo());
         }
 
     }
 
-    Long curWorkId;
-    LinearLayout curUpload;
     ImageView curUploadImageView;
-    FlowLayout curFlowlayout;
-    Map<Long, ArrayList> imgList = new HashMap<Long, ArrayList>();
+    ArrayList imgList = new ArrayList();
     // 生成拍照组件，并处理上传方法
     private void generate_camera(List<WorkOrderDetailBean.ResultBean.WorkInfoBean> workInfoBeanList){
         // layout_camaro
-        // 拍照Long workId
-        for(WorkOrderDetailBean.ResultBean.WorkInfoBean workInfoBean : workInfoBeanList){
-            LinearLayout linearLayout_camera = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.comp_camera, null,false);
-            LinearLayout upload = (LinearLayout) linearLayout_camera.findViewById(R.id.upload);
-            TextView label_cont = (TextView) linearLayout_camera.findViewById(R.id.label);
-            FlowLayout flowlayout = (FlowLayout) linearLayout_camera.findViewById(R.id.flowlayout);
-
-            Long workId = workInfoBean.getWork_order_id();
-            String workCont = workInfoBean.getRepair_content();
-            label_cont.setText(workCont);
-            int uploadId =  View.generateViewId();
-            upload.setId(uploadId);
-            Integer imgFlag = 0;
-            ArrayList groupImgList = new ArrayList();
-            imgList.put(workId,groupImgList);
-
-            upload.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
-                @Override
-                public void onClick(View v) {
-                    ArrayList gImgList = imgList.get(curWorkId);
-                    if(gImgList != null && gImgList.size() > 5) {
-                        Toast.makeText(WorkOrderAddActivity.this,"最多上传6张",Toast.LENGTH_SHORT);
-                        return;
-                    }
-                    curWorkId = workId;
-                    curUpload = upload;
-                    curFlowlayout = flowlayout;
-                    startUpload();
+        // 拍照
+        upload.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                if(imgList != null && imgList.size() > 5) {
+                    Toast.makeText(WorkOrderAddActivity.this,"最多上传6张",Toast.LENGTH_SHORT);
+                    return;
                 }
-            });
-            layoutWorkCont.addView(linearLayout_camera);
-        }
+                startUpload();
+            }
+        });
     }
 
     private void generate_img(){
         // 上传后显示的图片
-        RelativeLayout relative_img = (RelativeLayout)LayoutInflater.from(this).inflate(R.layout.comp_camera_img, curFlowlayout,false);
+        RelativeLayout relative_img = (RelativeLayout)LayoutInflater.from(this).inflate(R.layout.comp_camera_img, flowlayout,false);
         curUploadImageView = (ImageView) relative_img.findViewById(R.id.upload_img);
         ImageView upload_del = (ImageView) relative_img.findViewById(R.id.upload_del);
-        curFlowlayout.addView(relative_img);
+        flowlayout.addView(relative_img);
 
-        ArrayList gImgList = imgList.get(curWorkId);
-        upload_del.setTag(gImgList.size());
+        upload_del.setTag(imgList.size());
         upload_del.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                curFlowlayout.removeView(relative_img);
+                flowlayout.removeView(relative_img);
                 int index = (int) upload_del.getTag();
-                ArrayList gImgList = imgList.get(curWorkId);
-                if(gImgList != null && gImgList.size() > 0){
-                    gImgList.remove(index);
+                if(imgList != null && imgList.size() > 0){
+                    imgList.remove(index);
                 }
 
             }
@@ -364,7 +323,7 @@ public class WorkOrderAddActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-
+                setResult(RESULT_OK);
                 LoadingDialog.setInstance(null);
                 this.finish(); // back button
                 return true;
@@ -450,6 +409,7 @@ public class WorkOrderAddActivity extends AppCompatActivity {
         if(requestCode == 0) {
             Toast.makeText(this, "权限获得", Toast.LENGTH_SHORT).show();
         } else if(requestCode > 0){
+            LoadingDialog.getInstance(WorkOrderAddActivity.this).hide();
             generate_img();
 
             File file = null;
@@ -462,11 +422,6 @@ public class WorkOrderAddActivity extends AppCompatActivity {
                 compressImage(file.getPath(),curUploadImageView);
                 Glide.with(this).load(data.getData()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(curUploadImageView);
             }
-
-            if(file != null){
-                uploadImg(file);
-            }
-
         }
         imgPath = "";
     }
@@ -501,13 +456,11 @@ public class WorkOrderAddActivity extends AppCompatActivity {
 
     protected void uploadImg(File uploadFile){
         ArrayList<Map<String, Object>> curList = null;
-        curList = imgList.get(curWorkId);
         String url = HttpService.BASE_URL + "amiwatergas/mobile/fileUpload";
         Request request = ItheimaHttp.newUploadRequest(url, RequestMethod.POST);
         request.putHeader("Content-Type","multipart/form-data");
         request.putHeader("Authorization","Bearer " + Tool.getToken(WorkOrderAddActivity.this));
         request.putUploadFile("file",uploadFile).putMediaType(MediaType.parse("multipart/form-data"));
-        ArrayList finalCurList = curList;
         ItheimaHttp.upload(request, new UploadListener() {
             @Override
             public void onResponse(okhttp3.Call call, Response response) {
@@ -516,12 +469,13 @@ public class WorkOrderAddActivity extends AppCompatActivity {
                     try {
                         resultBean = new Gson().fromJson(response.body().string(), FileUploadBean.class);
                         if(resultBean != null && resultBean.getCode() == 200){
-                            finalCurList.add(resultBean.getResult());
+                            imgList.add(resultBean.getResult());
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                LoadingDialog.getInstance(WorkOrderAddActivity.this).hide();
             }
 
             @Override

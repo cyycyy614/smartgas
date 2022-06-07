@@ -35,7 +35,7 @@ public class PieChartUtils {
         //饼状图
         pieChart.setUsePercentValues(true);//设置value是否用显示百分数,默认为false
         pieChart.getDescription().setEnabled(false);//设置描述
-        pieChart.setExtraOffsets(10f, 15f, 20f, 15f);//设置饼状图距离上下左右的偏移量
+        pieChart.setExtraOffsets(15f, 15f, 20f, 15f);//设置饼状图距离上下左右的偏移量
 
         pieChart.setDragDecelerationFrictionCoef(0.45f);//设置阻尼系数,范围在[0,1]之间,越小饼状图转动越困难
         //设置中间文字

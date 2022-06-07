@@ -65,12 +65,16 @@ public class WorkOrderDetailActivity extends AppCompatActivity {
     TextView wOrderTime;
     @BindView(R.id.w_addr)
     TextView wAddr;
+    @BindView(R.id.w_const)
+    TextView wConst;
     @BindView(R.id.layout_work_cont)
     LinearLayout layoutWorkCont;
     @BindView(R.id.textarea)
     TextView textarea;
     @BindView(R.id.activity_rootview)
     ScrollView activity_rootview;
+    @BindView(R.id.flowlayout)
+    FlowLayout flowlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +156,7 @@ public class WorkOrderDetailActivity extends AppCompatActivity {
         wUsername.setText(resultBean.getReporter_name() + "");
         wReporterMobile.setText(resultBean.getAccount_phone() + "");
         wReportTime.setText(resultBean.getReport_time() + "");
-        textarea.setText(resultBean.getWork_content() + "");
+        wConst.setText(resultBean.getWork_content() + "");
         generate_camp(findViewById(R.id.activity_rootview), resultBean.getWorkInfo());
     }
 
@@ -171,14 +175,11 @@ public class WorkOrderDetailActivity extends AppCompatActivity {
     private void generate_camp(View view, List<WorkOrderDetailBean.ResultBean.WorkInfoBean> workInfoBeanList){
         // 照片
         // 上传后显示的图片
-        for(WorkOrderDetailBean.ResultBean.WorkInfoBean workInfoBean : workInfoBeanList){
-            LinearLayout layout_camera = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.comp_show_camera, (ViewGroup) view,false);
-            TextView label = (TextView) layout_camera.findViewById(R.id.label);
-            FlowLayout flowlayout = (FlowLayout) layout_camera.findViewById(R.id.flowlayout);
-
-            label.setText(TextUtils.isEmpty(workInfoBean.getRepair_content())?"":workInfoBean.getRepair_content());
+        if(workInfoBeanList != null && workInfoBeanList.size() > 0){
+            WorkOrderDetailBean.ResultBean.WorkInfoBean workInfoBean = workInfoBeanList.get(0);
+            textarea.setText(TextUtils.isEmpty(workInfoBean.getRepair_content())?"":workInfoBean.getRepair_content());
             if(!TextUtils.isEmpty( workInfoBean.getRepairUrl())){
-                 String[] sList =  workInfoBean.getRepairUrl().split(",");
+                String[] sList =  workInfoBean.getRepairUrl().split(",");
                 for(int i = 0; i < sList.length;i++) {
                     RelativeLayout relative_img = (RelativeLayout)LayoutInflater.from(this).inflate(R.layout.comp_camera_show_img, flowlayout,false);
                     ImageView img = (ImageView) relative_img.findViewById(R.id.upload_img);
@@ -187,7 +188,6 @@ public class WorkOrderDetailActivity extends AppCompatActivity {
                     flowlayout.addView(relative_img);
                 }
             }
-            layoutWorkCont.addView(layout_camera);
         }
     }
 }

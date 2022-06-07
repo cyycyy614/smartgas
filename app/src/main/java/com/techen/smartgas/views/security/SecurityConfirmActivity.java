@@ -51,6 +51,7 @@ public class SecurityConfirmActivity extends AppCompatActivity {
     Button btnCheck;
 
     String plan_id;
+    String isdanger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,13 @@ public class SecurityConfirmActivity extends AppCompatActivity {
         //接受参数
         Intent intent = getIntent();
         plan_id = intent.getStringExtra("plan_id");
+        isdanger = intent.getStringExtra("isdanger");
+
+        if(isdanger.equals("1")){
+            radioEdit.setVisibility(View.VISIBLE);
+        }else{
+            radioEdit.setVisibility(View.GONE);
+        }
 
         btnCheck.setOnClickListener(mListener);
         // 返回按钮
@@ -82,10 +90,11 @@ public class SecurityConfirmActivity extends AppCompatActivity {
                         Toast.makeText(SecurityConfirmActivity.this, "请勾选用户告知", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(radioEdit.isChecked() == false){
+                    if(isdanger.equals("1") && radioEdit.isChecked() == false){
                         Toast.makeText(SecurityConfirmActivity.this, "请勾选整改告知", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    btnCheck.setEnabled(false);
                     String securityStr = (String) SharedPreferencesUtil.get(SecurityConfirmActivity.this,"securitydata","{}");
                     SecurityResultBean resultBean = Tool.jsonToObject1(securityStr,SecurityResultBean.class);
                     if(resultBean != null){
@@ -110,7 +119,7 @@ public class SecurityConfirmActivity extends AppCompatActivity {
         request.post("amiwatergas/mobile/securityRecord/save",paramObject,true,SecurityConfirmActivity.this, new HttpResponseListener<NormalBean>() {
             @Override
             public void onResponse(NormalBean securityBean, Headers headers) {
-
+                btnCheck.setEnabled(true);
                 if(securityBean != null && securityBean.getCode() == 200){
                     if(securityBean.getSuccess() == false){
                         Toast.makeText(SecurityConfirmActivity.this, securityBean.getMessage(), Toast.LENGTH_SHORT).show();
@@ -138,7 +147,7 @@ public class SecurityConfirmActivity extends AppCompatActivity {
              */
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable e) {
-                System.out.println("print data -- " +  e);
+                btnCheck.setEnabled(true);
                 // 打开结果页面
                 Intent i = new Intent(SecurityConfirmActivity.this,SecurityResultActivity.class);
                 i.putExtra("plan_id", plan_id + "");

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.techen.smartgas.R;
+import com.techen.smartgas.util.LoadingDialog;
 import com.techen.smartgas.views.security.SecurityItemFragment;
 import com.techen.smartgas.views.security.SecurityListActivity;
 
@@ -115,5 +116,11 @@ public class WorkOrderListActivity extends AppCompatActivity {
             return tabIndicators.size();
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        LoadingDialog.setInstance(null);
+        super.onDestroy();
     }
 }
