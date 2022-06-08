@@ -115,6 +115,7 @@ public class SecurityUserBean extends BasePageBean<SecurityUserBean.ResultBean.D
             private String state;
             private Long record_id;
             private Long cons_id;
+            private Long plan_id;
             private String plan_state;
 
             public String getPlan_state() {
@@ -171,6 +172,14 @@ public class SecurityUserBean extends BasePageBean<SecurityUserBean.ResultBean.D
 
             public void setTemplate_id(Long template_id) {
                 this.template_id = template_id;
+            }
+
+            public Long getPlan_id() {
+                return plan_id;
+            }
+
+            public void setPlan_id(Long plan_id) {
+                this.plan_id = plan_id;
             }
 
             public String getCons_name() {

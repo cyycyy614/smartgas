@@ -15,7 +15,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="125dp">
+        android:paddingBottom="10dp"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/order_code"
@@ -24,7 +25,7 @@
             android:layout_marginStart="84dp"
             android:layout_marginTop="44dp"
             android:text="0"
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,19 +37,8 @@
             android:layout_marginTop="20dp"
             android:text="13177777777"
             android:textColor="@color/blue"
-            android:textSize="10sp"
+            android:textSize="12dp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/order_source"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="268dp"
-            android:layout_marginTop="44dp"
-            android:text="0"
-            android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +49,7 @@
             android:layout_marginStart="84dp"
             android:layout_marginTop="68dp"
             android:text="0"
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,7 +60,7 @@
             android:layout_marginStart="84dp"
             android:layout_marginTop="92dp"
             android:text="0"
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,7 +72,7 @@
             android:layout_marginTop="92dp"
             android:text="报修地点："
             android:textColor="@color/black"
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,7 +84,7 @@
             android:layout_marginTop="68dp"
             android:text="提报时间："
             android:textColor="@color/black"
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -105,7 +95,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="44dp"
             android:text="编号："
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,7 +115,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:text="提报人"
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintLeft_toRightOf="@id/order_name"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -136,7 +126,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="44dp"
             android:text="编号："
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -144,12 +134,24 @@
             android:id="@+id/textView26"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="192dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
             android:text="工单来源："
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+        <TextView
+            android:id="@+id/order_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:text="0"
+            android:textSize="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/order_account_address"
+            app:layout_constraintLeft_toRightOf="@+id/textView26"/>
 
         <Button
             android:id="@+id/order_disp_state"
@@ -159,7 +161,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/corners_green_bg"
             android:text="已派发"
-            android:textSize="10sp"
+            android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

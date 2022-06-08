@@ -85,9 +85,17 @@ public class SecurityInfoBean {
             private String dispState;
             private RecordStateInfoBean recordStateInfo;
             private String planName;
+            private Long id;
             private Integer repetitionAccountAmount;
             private String startDate;
 
+            public Long getId() {
+                return id;
+            }
+
+            public void setId(Long id) {
+                this.id = id;
+            }
             public Integer getDangerAccountAmount() {
                 return dangerAccountAmount;
             }
@@ -219,6 +227,15 @@ public class SecurityInfoBean {
             private String planName;
             private Integer repetitionAccountAmount;
             private String startDate;
+            private Long id;
+
+            public Long getId() {
+                return id;
+            }
+
+            public void setId(Long id) {
+                this.id = id;
+            }
 
             public Integer getDangerAccountAmount() {
                 return dangerAccountAmount;

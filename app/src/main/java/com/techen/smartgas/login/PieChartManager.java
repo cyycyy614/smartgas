@@ -27,7 +27,7 @@ public class PieChartManager {
         //饼状图
         pieChart.setUsePercentValues(true);//设置value是否用显示百分数,默认为false
         pieChart.getDescription().setEnabled(false);//设置描述
-        pieChart.setExtraOffsets(10f, 15f, 10f, 15f);//设置饼状图距离上下左右的偏移量
+        pieChart.setExtraOffsets(20f, 15f, 20f, 15f);//设置饼状图距离上下左右的偏移量
 
         pieChart.setDragDecelerationFrictionCoef(0.45f);//设置阻尼系数,范围在[0,1]之间,越小饼状图转动越困难
         //设置中间文字
@@ -70,6 +70,7 @@ public class PieChartManager {
         l.setXEntrySpace(5f);//设置tab比例块之间X轴方向上的空白间距值(水平排列时)
         l.setYEntrySpace(5f);//设置tab比例块之间Y轴方向上的空白间距值(垂直排列时)
         l.setYOffset(0f);//设置比例块Y轴偏移量
+        l.setXOffset(10f);//设置比例块Y轴偏移量
         l.setFormSize(10f);//设置比例块大小
         l.setForm(Legend.LegendForm.CIRCLE);//设置图例形状，默认为方块SQUARE，CIRCLE圆角
         l.setFormToTextSpace(10f);           //设置每个图例实体中标签和形状之间的间距

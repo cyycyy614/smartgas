@@ -14,6 +14,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 import android.os.Environment;
@@ -22,6 +23,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,9 +89,11 @@ public class IndexActivity extends AppCompatActivity {
     private TextView totalAmount2;
     private TextView inAmount2;
     private Button dispState2;
+    private CardView layoutPlan;
+    private CardView layoutRePlan;
 
     SecurityInfoBean.ResultBean.LastSecurityPlanBean planBean;
-
+    SecurityInfoBean.ResultBean.LastRepetitionPlanBean rePlanBean;
     private ArrayList<Integer> colors;
     private ArrayList<PieEntry> entries;
     private PieChartManager pieChartManager;
@@ -114,6 +118,7 @@ public class IndexActivity extends AppCompatActivity {
 
 
         //获取信息项
+        layoutPlan = (CardView) findViewById(R.id.layout_plan);
         planName = (TextView)findViewById(R.id.SecurityPlan_planName);
         endDate= (TextView)findViewById(R.id.SecurityPlan_endDate);
         startDate= (TextView)findViewById(R.id.SecurityPlan_startDate);
@@ -124,6 +129,7 @@ public class IndexActivity extends AppCompatActivity {
         dispState=(Button)findViewById(R.id.SecurityPlan_dispState) ;
 
         //获取复检信息项
+        layoutRePlan = (CardView) findViewById(R.id.layout_replan);
         planName2 = (TextView)findViewById(R.id.RepetitionPlan_planName);
         endDate2= (TextView)findViewById(R.id.RepetitionPlan_endDate);
         startDate2= (TextView)findViewById(R.id.RepetitionPlan_startDate);
@@ -146,6 +152,8 @@ public class IndexActivity extends AppCompatActivity {
         icon2.setOnClickListener(mListener);
         icon3.setOnClickListener(mListener);
         icon4.setOnClickListener(mListener);
+        layoutPlan.setOnClickListener(mListener);
+        layoutRePlan.setOnClickListener(mListener);
 
         if(checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
             // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
@@ -295,13 +303,15 @@ public class IndexActivity extends AppCompatActivity {
                     goStatisticsList();
                     //统计分析
                     break;
-                case R.id.SecurityPlan_dispState:
-                    if(planBean != null){
-//                        Intent intent = new Intent(IndexActivity.this, UserListActivity.class);
-//                        intent.putExtra("id", planBean.get + "");
-//                        intent.putExtra("repetition_flag", repetition_flag);
-//                        intent.putExtra("code", stateCode);
-//                        startActivity(intent);
+                case R.id.layout_plan:
+                    if(planBean != null && planBean.getId() != null){
+                       goUserList(planBean.getId() + "",0);
+                    }
+                    //下发
+                    break;
+                case R.id.layout_replan:
+                    if(rePlanBean != null && rePlanBean.getId() != null){
+                       goUserList(rePlanBean.getId() + "",1);
                     }
                     //下发
                     break;
@@ -378,6 +388,13 @@ public class IndexActivity extends AppCompatActivity {
 //        intent.putExtra("repetition_flag", 1);
         startActivity(intent);
     }
+    private void goUserList(String id,Integer repetition_flag){
+        // 跳转用户列表
+        Intent intent = new Intent(IndexActivity.this, UserListActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("repetition_flag", repetition_flag);
+        startActivity(intent);
+    }
 
     public void getData(String Token){
         RequestUtils request = new RequestUtils();
@@ -428,6 +445,7 @@ public class IndexActivity extends AppCompatActivity {
                             setPieChartData2(recordStateInfoBean2);
                         }
                         dispState2.setOnClickListener(mListener);
+                        rePlanBean = lastRepetitionPlanBean;
                     }
 
                 }

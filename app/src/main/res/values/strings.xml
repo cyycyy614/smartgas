@@ -55,6 +55,8 @@
     <string name="userstatus">用户状态:</string>
     <string name="address">详细地址:</string>
     <string name="enter">入户</string>
+    <string name="miss">到访不遇</string>
+    <string name="reject">拒绝安检</string>
     <string name="securityrecord">安检记录</string>
     <string name="date_range">日期范围:</string>
 </resources>

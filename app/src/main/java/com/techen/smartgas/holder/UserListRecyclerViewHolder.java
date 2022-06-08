@@ -22,6 +22,7 @@ import com.techen.smartgas.views.security.UserListFragment;
 import com.techen.smartgas.widget.IosPopupWindow;
 
 import org.itheima.recycler.viewholder.BaseRecyclerViewHolder;
+import org.itheima.recycler.widget.PullToLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,10 +53,15 @@ public class UserListRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityU
     Button btnRecord;
     @BindView(R.id.btn_enter)
     Button btnEnter;
-
+    @BindView(R.id.btn_reject)
+    Button btnReject;
+    @BindView(R.id.btn_miss)
+    Button btnMiss;
+    PullToLoadMoreRecyclerView mpullToLoadMoreRecyclerView;
     //换成你布局文件中的id
-    public UserListRecyclerViewHolder(ViewGroup parentView, int itemResId) {
+    public UserListRecyclerViewHolder(ViewGroup parentView, int itemResId, PullToLoadMoreRecyclerView pullToLoadMoreRecyclerView) {
         super(parentView, itemResId);
+        mpullToLoadMoreRecyclerView = pullToLoadMoreRecyclerView;
     }
 
     /**
@@ -66,16 +72,24 @@ public class UserListRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityU
         if (mData.getState().equals("normal") || mData.getState().equals("danger")) {
             btnRecord.setVisibility(View.VISIBLE);
             btnEnter.setVisibility(View.GONE);
+            btnMiss.setVisibility(View.GONE);
+            btnReject.setVisibility(View.GONE);
         } else if (mData.getState().equals("undo")) {
             btnRecord.setVisibility(View.GONE);
             btnEnter.setVisibility(View.VISIBLE);
+            btnMiss.setVisibility(View.VISIBLE);
+            btnReject.setVisibility(View.VISIBLE);
         } else{
             btnRecord.setVisibility(View.GONE);
             btnEnter.setVisibility(View.GONE);
+            btnMiss.setVisibility(View.GONE);
+            btnReject.setVisibility(View.GONE);
         }
         if (mData.getState().equals("closed")) {
             btnRecord.setVisibility(View.GONE);
             btnEnter.setVisibility(View.GONE);
+            btnMiss.setVisibility(View.GONE);
+            btnReject.setVisibility(View.GONE);
         }
         title.setText(mData.getCons_addr());
         address.setText(mData.getCons_addr());
@@ -87,8 +101,68 @@ public class UserListRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityU
 
 
     @OnClick(R.id.btn_enter)
-    public void click(View v) {
-
+    public void enterClick(View v) {
+        Intent intent = new Intent(v.getContext(), SecurityAddActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("plan_id", mData.getPlan_id() + "");
+        intent.putExtra("template_id", mData.getTemplate_id() + "");
+        intent.putExtra("account_id", mData.getCons_id() + "");
+        intent.putExtra("repetition_flag", 0);
+        mContext.startActivity(intent);
+    }
+    @OnClick(R.id.btn_miss)
+    public void missClick(View v) {
+        handleUnNormalState("miss","到访不遇");
+    }
+    @OnClick(R.id.btn_reject)
+    public void rejectClick(View v) {
+        handleUnNormalState("reject","拒绝安检");
+    }
+    @OnClick(R.id.btn_record)
+    public void recordClick(View v) {
+        // 打开详情页面
+        Intent intent = new Intent(v.getContext(), SecurityDetailActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("template_id", mData.getTemplate_id() + "");
+        intent.putExtra("record_id", mData.getRecord_id() + "");
+        mContext.startActivity(intent);
     }
 
+    private void handleUnNormalState(String code, String name) {
+        RequestUtils request = new RequestUtils();
+        Long plan_id = mData.getPlan_id();
+        Long account_id = mData.getCons_id();
+        JSONObject paramObject = new JSONObject();
+        try {
+            paramObject.put("planId", plan_id);
+            paramObject.put("accountId", account_id);
+            paramObject.put("repetitionFlag", 1);
+            paramObject.put("state", code);
+            paramObject.put("elecSignature", "");
+            paramObject.put("description", name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        request.post("amiwatergas/mobile/securityRecord/save", paramObject, true, mContext, new HttpResponseListener<NormalBean>() {
+            @Override
+            public void onResponse(NormalBean bean, Headers headers) {
+                System.out.println("print data");
+                System.out.println("print data -- " + bean);
+                mData.setState(code);
+                mData.setDispstate(name);
+
+            }
+
+            /**
+             * 可以不重写失败回调
+             * @param call
+             * @param e
+             */
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable e) {
+                System.out.println("print data -- " + e);
+            }
+        });
+    }
 }

@@ -128,7 +128,6 @@ public class SecurityItemFragment extends Fragment {
                 Intent intent = new Intent(contentView.getContext(), UserListActivity.class);
                 intent.putExtra("id", id+"");
                 intent.putExtra("repetition_flag", repetition_flag);
-                intent.putExtra("code", stateCode);
                 startActivity(intent);
             }
         });

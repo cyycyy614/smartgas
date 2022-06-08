@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +20,6 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.itheima.retrofitutils.listener.HttpResponseListener;
 import com.techen.smartgas.R;
-import com.techen.smartgas.holder.UserListRecyclerViewHolder;
 import com.techen.smartgas.model.NormalBean;
 import com.techen.smartgas.model.SecurityDetailBean;
 import com.techen.smartgas.model.SecurityUserBean;
@@ -32,6 +32,7 @@ import org.itheima.recycler.L;
 import org.itheima.recycler.adapter.BaseLoadMoreRecyclerAdapter;
 import org.itheima.recycler.header.RecyclerViewHeader;
 import org.itheima.recycler.listener.ItemClickSupport;
+import org.itheima.recycler.viewholder.BaseRecyclerViewHolder;
 import org.itheima.recycler.widget.ItheimaRecyclerView;
 import org.itheima.recycler.widget.PullToLoadMoreRecyclerView;
 
@@ -42,6 +43,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.Headers;
 import okhttp3.ResponseBody;
@@ -57,7 +59,7 @@ public class UserListFragment extends Fragment {
     private static final String EXTRA_CODE = "code";
     private static final String EXTRA_FLAG = "flag";
     private static final String EXTRA_SID = "securityId";
-    private static final String EXTRA_TYPE = "type";
+
     @BindView(R.id.plan_address)
     TextView planAddress;
     @BindView(R.id.plan_state)
@@ -70,7 +72,7 @@ public class UserListFragment extends Fragment {
 //    private AlertView mAlertView;
 
     BaseLoadMoreRecyclerAdapter.LoadMoreViewHolder holder;
-    PullToLoadMoreRecyclerView pullToLoadMoreRecyclerView;
+    static PullToLoadMoreRecyclerView pullToLoadMoreRecyclerView;
 
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout myswipeRefreshLayout;
@@ -96,12 +98,11 @@ public class UserListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static UserListFragment newInstance(String securityId, String code, Integer flag,String type) {
+    public static UserListFragment newInstance(String securityId, String code, Integer flag) {
         Bundle arguments = new Bundle();
         arguments.putString(EXTRA_CODE, code);
         arguments.putString(EXTRA_SID, securityId);
         arguments.putInt(EXTRA_FLAG, flag);
-        arguments.putString(EXTRA_TYPE, type);
         UserListFragment userListFragment = new UserListFragment();
         userListFragment.setArguments(arguments);
         return userListFragment;
@@ -113,7 +114,6 @@ public class UserListFragment extends Fragment {
         if (getArguments() != null) {
             code = getArguments().getString(EXTRA_CODE);
             securityId = getArguments().getString(EXTRA_SID);
-            type = getArguments().getString(EXTRA_TYPE);
             repetition_flag = getArguments().getInt(EXTRA_FLAG, 0);
         }
     }
@@ -263,7 +263,6 @@ public class UserListFragment extends Fragment {
                     }
                 } else {
                     for (SecurityUserBean.ResultBean.DataListBean item : itemDatas) {
-                        item.setType(type);
                         itemsBeanList.add(item);
                     }
                 }
@@ -417,5 +416,135 @@ public class UserListFragment extends Fragment {
                 System.out.println("print data -- " + e);
             }
         });
+    }
+
+    public static class UserListRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityUserBean.ResultBean.DataListBean> {
+        @BindView(R.id.title)
+        TextView title;
+        @BindView(R.id.username)
+        TextView username;
+        @BindView(R.id.userno)
+        TextView userno;
+        @BindView(R.id.mobile)
+        TextView mobile;
+        @BindView(R.id.userstatus)
+        TextView userstatus;
+        @BindView(R.id.address)
+        TextView address;
+        @BindView(R.id.btn_record)
+        Button btnRecord;
+        @BindView(R.id.btn_enter)
+        Button btnEnter;
+        @BindView(R.id.btn_reject)
+        Button btnReject;
+        @BindView(R.id.btn_miss)
+        Button btnMiss;
+
+        //换成你布局文件中的id
+        public UserListRecyclerViewHolder(ViewGroup parentView, int itemResId) {
+            super(parentView, itemResId);
+        }
+
+        /**
+         * 绑定数据的方法，在mData获取数据（mData声明在基类中）
+         */
+        @Override
+        public void onBindRealData() {
+            if (mData.getState().equals("normal") || mData.getState().equals("danger")) {
+                btnRecord.setVisibility(View.VISIBLE);
+                btnEnter.setVisibility(View.GONE);
+                btnMiss.setVisibility(View.GONE);
+                btnReject.setVisibility(View.GONE);
+            } else if (mData.getState().equals("undo")) {
+                btnRecord.setVisibility(View.GONE);
+                btnEnter.setVisibility(View.VISIBLE);
+                btnMiss.setVisibility(View.VISIBLE);
+                btnReject.setVisibility(View.VISIBLE);
+            } else{
+                btnRecord.setVisibility(View.GONE);
+                btnEnter.setVisibility(View.GONE);
+                btnMiss.setVisibility(View.GONE);
+                btnReject.setVisibility(View.GONE);
+            }
+            if (mData.getState().equals("closed")) {
+                btnRecord.setVisibility(View.GONE);
+                btnEnter.setVisibility(View.GONE);
+                btnMiss.setVisibility(View.GONE);
+                btnReject.setVisibility(View.GONE);
+            }
+            title.setText(mData.getCons_addr());
+            address.setText(mData.getCons_addr());
+            mobile.setText(mData.getCons_tel());
+            userno.setText(mData.getCons_no());
+            username.setText(mData.getCons_name());
+            userstatus.setText(mData.getDispstate());
+        }
+
+
+        @OnClick(R.id.btn_enter)
+        public void enterClick(View v) {
+            Intent intent = new Intent(v.getContext(), SecurityAddActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("plan_id", mData.getPlan_id() + "");
+            intent.putExtra("template_id", mData.getTemplate_id() + "");
+            intent.putExtra("account_id", mData.getCons_id() + "");
+            intent.putExtra("repetition_flag", 0);
+            mContext.startActivity(intent);
+        }
+        @OnClick(R.id.btn_miss)
+        public void missClick(View v) {
+            handleUnNormalState("miss","到访不遇");
+        }
+        @OnClick(R.id.btn_reject)
+        public void rejectClick(View v) {
+            handleUnNormalState("reject","拒绝安检");
+        }
+        @OnClick(R.id.btn_record)
+        public void recordClick(View v) {
+            // 打开详情页面
+            Intent intent = new Intent(v.getContext(), SecurityDetailActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("template_id", mData.getTemplate_id() + "");
+            intent.putExtra("record_id", mData.getRecord_id() + "");
+            mContext.startActivity(intent);
+        }
+
+        private void handleUnNormalState(String code, String name) {
+            RequestUtils request = new RequestUtils();
+            Long plan_id = mData.getPlan_id();
+            Long account_id = mData.getCons_id();
+            JSONObject paramObject = new JSONObject();
+            try {
+                paramObject.put("planId", plan_id);
+                paramObject.put("accountId", account_id);
+                paramObject.put("repetitionFlag", 1);
+                paramObject.put("state", code);
+                paramObject.put("elecSignature", "");
+                paramObject.put("description", name);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            request.post("amiwatergas/mobile/securityRecord/save", paramObject, true, mContext, new HttpResponseListener<NormalBean>() {
+                @Override
+                public void onResponse(NormalBean bean, Headers headers) {
+                    System.out.println("print data");
+                    System.out.println("print data -- " + bean);
+                    mData.setState(code);
+                    mData.setDispstate(name);
+                    pullToLoadMoreRecyclerView.onRefresh();
+                }
+
+                /**
+                 * 可以不重写失败回调
+                 * @param call
+                 * @param e
+                 */
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable e) {
+                    System.out.println("print data -- " + e);
+                }
+            });
+        }
     }
 }

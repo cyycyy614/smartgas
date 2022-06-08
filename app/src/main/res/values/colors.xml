@@ -18,6 +18,7 @@
     <color name="status_issued">#02A7F0</color>
     <color name="status_closed">#D9001B</color>
     <color name="status_record">#F59A23</color>
+    <color name="status_reject">#FF5722</color>
     <color name="font_gray">#7F7F7F</color>
 
     <color name="colorPrimary">#3F51B5</color>
