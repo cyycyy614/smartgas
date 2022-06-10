@@ -39,7 +39,7 @@ public class BarChartUtils {
         chart.setPinchZoom(false);
         Description description = chart.getDescription();
         description.setEnabled(true);
-        description.setPosition(100,40);
+        description.setPosition(120,40);
 //        description.setYOffset(20);
         description.setText("入户率");
         description.setTextSize(14);

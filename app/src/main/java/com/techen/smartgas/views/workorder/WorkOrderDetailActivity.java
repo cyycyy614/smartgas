@@ -157,6 +157,8 @@ public class WorkOrderDetailActivity extends AppCompatActivity {
         wReporterMobile.setText(resultBean.getAccount_phone() + "");
         wReportTime.setText(resultBean.getReport_time() + "");
         wConst.setText(resultBean.getWork_content() + "");
+        wSource.setText(resultBean.getOrder_source() + "");
+
         generate_camp(findViewById(R.id.activity_rootview), resultBean.getWorkInfo());
     }
 

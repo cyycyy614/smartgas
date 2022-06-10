@@ -85,7 +85,7 @@ public class UserListRecyclerViewHolder extends BaseRecyclerViewHolder<SecurityU
             btnMiss.setVisibility(View.GONE);
             btnReject.setVisibility(View.GONE);
         }
-        if (mData.getState().equals("closed")) {
+        if (mData.getState().equals("closed") || mData.getPlan_state().equals("closed")) {
             btnRecord.setVisibility(View.GONE);
             btnEnter.setVisibility(View.GONE);
             btnMiss.setVisibility(View.GONE);

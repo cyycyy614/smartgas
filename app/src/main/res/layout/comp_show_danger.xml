@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="非必填"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp" />
     </LinearLayout>
 
@@ -115,12 +114,11 @@
             android:layout_weight="1"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
+            android:textColor="@color/black"
             android:background="@drawable/rectangel_noborder_item"
             android:textSize="14dp"
             android:hint=""
-            android:lines="3"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp" />
+            android:lines="3" />
     </LinearLayout>
 
     <LinearLayout

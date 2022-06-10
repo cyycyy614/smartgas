@@ -240,6 +240,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="20dp"
+                        android:visibility="gone"
                         android:text="最新时间"
                         android:textSize="12dp"
                         app:layout_constraintEnd_toStartOf="@+id/SecurityPlan_endDate"
@@ -252,6 +253,7 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="32dp"
                         android:text=""
+                        android:visibility="gone"
                         android:textSize="12dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -380,6 +382,7 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="20dp"
                         android:text="最新时间"
+                        android:visibility="gone"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toStartOf="@+id/RepetitionPlan_endDate"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -390,6 +393,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="16dp"
+                        android:visibility="gone"
                         android:text=""
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -425,11 +429,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
-                        android:layout_marginTop="48dp"
+                        android:layout_marginTop="6dp"
                         android:text="需复检"
                         android:textSize="10sp"
                         app:layout_constraintStart_toEndOf="@+id/plan2_6"
-                        app:layout_constraintTop_toBottomOf="@+id/RepetitionPlan_endDate" />
+                        app:layout_constraintTop_toBottomOf="@+id/RepetitionPlan_planName" />
 
                     <TextView
                         android:id="@+id/plan2_6"

@@ -270,6 +270,7 @@ public class WorkOrderAddActivity extends AppCompatActivity {
         wReporterMobile.setText(resultBean.getAccount_phone() + "");
         wReportTime.setText(resultBean.getReport_time() + "");
         wConst.setText(resultBean.getWork_content() + "");
+        wSource.setText(resultBean.getOrder_source() + "");
 
         List<WorkOrderDetailBean.ResultBean.WorkInfoBean> workInfoBeanList = resultBean.getWorkInfo();
         if(workInfoBeanList != null && workInfoBeanList.size() > 0){
@@ -410,14 +411,19 @@ public class WorkOrderAddActivity extends AppCompatActivity {
             Toast.makeText(this, "权限获得", Toast.LENGTH_SHORT).show();
         } else if(requestCode > 0){
             LoadingDialog.getInstance(WorkOrderAddActivity.this).hide();
-            generate_img();
 
             File file = null;
             if(requestCode == 10){//相机
                 file = new File(imgPath);
+                if(file != null && file.length() == 0){
+                    return;
+                }else{
+                    generate_img();
+                }
                 Glide.with(this).load(imgPath).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(curUploadImageView);
                 compressImage(imgPath,curUploadImageView);
             }else if(requestCode == 11 && data != null){
+                generate_img();
                 file = new File(UriToFile(data.getData()));
                 compressImage(file.getPath(),curUploadImageView);
                 Glide.with(this).load(data.getData()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(curUploadImageView);

@@ -431,7 +431,7 @@ public class IndexActivity extends AppCompatActivity {
                     if(lastRepetitionPlanBean != null){
                         //复检计划基础数据赋值
                         planName2.setText(lastRepetitionPlanBean.getPlanName());
-                        endDate2.setText(lastRepetitionPlanBean.getEndDate());
+                        endDate2.setText(DateTimeHelper.formatToString(lastRepetitionPlanBean.getEndDate(),"yyyy-MM-dd"));
                         String startDateStr = lastRepetitionPlanBean.getStartDate();
                         String formartStartDate = DateTimeHelper.formatToString(startDateStr,"yyyy-MM-dd");
                         startDate2.setText(formartStartDate);
@@ -439,7 +439,7 @@ public class IndexActivity extends AppCompatActivity {
                         dangerAccountAmount2.setText(lastRepetitionPlanBean.getDangerAccountAmount().toString());
                         totalAmount2.setText(lastRepetitionPlanBean.getTotalAmount().toString());
                         inAmount2.setText(lastRepetitionPlanBean.getInAmount().toString());
-                        dispState2.setText(DateTimeHelper.formatToString(lastRepetitionPlanBean.getDispState(),"yyyy-MM-dd"));
+                        dispState2.setText(lastRepetitionPlanBean.getDispState());
                         if(lastRepetitionPlanBean.getRecordStateInfo() != null){
                             SecurityInfoBean.ResultBean.LastRepetitionPlanBean.RecordStateInfoBean recordStateInfoBean2 = lastRepetitionPlanBean.getRecordStateInfo();
                             setPieChartData2(recordStateInfoBean2);

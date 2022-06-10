@@ -117,7 +117,7 @@ public class PieChartManager {
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
 
         PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter());  //设置所有DataSet内数据实体（百分比）的文本字体格式
+        data.setValueFormatter(new PercentFormatter(pieChart));  //设置所有DataSet内数据实体（百分比）的文本字体格式
         data.setValueTextSize(13f);//设置所有DataSet内数据实体（百分比）的文本字体大小
         data.setValueTextColor(Color.BLACK); //设置所有DataSet内数据实体（百分比）的文本颜色
 //        data.setValueTypeface(mTfLight);     //设置所有DataSet内数据实体（百分比）的文本字体样式

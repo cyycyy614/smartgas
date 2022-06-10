@@ -14,7 +14,9 @@
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/dashed_bg.xml" value="0.1965" />
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/popup_shape.xml" value="0.227" />
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/rectangel_item.xml" value="0.117" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/drawable/rectangel_noborder_bg_item.xml" value="0.181" />
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/rectangel_noborder_item.xml" value="0.135" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/drawable/round_bg_fff.xml" value="0.1315" />
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/solid_bg.xml" value="0.2195" />
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/switch_ios_thumb.xml" value="0.165" />
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/switch_ios_track_off.xml" value="0.165" />
@@ -22,7 +24,7 @@
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/switch_ios_track_selector.xml" value="0.165" />
         <entry key="..\:/android/SmartGas/app/src/main/res/drawable/tabs_rounded_line_indicator.xml" value="0.1865" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/activity_main.xml" value="0.1765625" />
-        <entry key="..\:/android/SmartGas/app/src/main/res/layout/activity_secuirty_danger.xml" value="0.2" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/layout/activity_secuirty_danger.xml" value="0.264" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/activity_security.xml" value="0.1" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/activity_security_add.xml" value="0.264" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/activity_security_confirm.xml" value="0.264" />
@@ -74,6 +76,7 @@
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/item_security_add_group.xml" value="0.2" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/item_user.xml" value="0.4" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/item_workorder.xml" value="0.264" />
+        <entry key="..\:/android/SmartGas/app/src/main/res/layout/layout_my_dialog.xml" value="0.16799999999999998" />
         <entry key="..\:/android/SmartGas/app/src/main/res/layout/layout_progress.xml" value="0.2" />
         <entry key="..\:/android/SmartGas/app/src/main/res/menu/menu_main.xml" value="0.2234375" />
         <entry key="..\:/android/SmartGas/app/src/main/res/menu/menu_security_confirm.xml" value="0.25364583333333335" />

@@ -364,7 +364,26 @@ public class SecurityDetailActivity extends AppCompatActivity {
         for(SecurityRecordDetailBean.ResultBean.SecurityCheckItemValueListBean itemBean : checkItemList){
             if(itemBean.getItem_id().equals(bean.getId())){
                 val = itemBean.getItem_value();
-                if(types.indexOf(bean.getItem_type()) > -1){
+                if(bean.getItem_type().equals("checkbox")){
+                    String option_str = bean.getItem_option();
+                    String show_str = "";
+                    if(val != null && !TextUtils.isEmpty(val)){
+                        List<String > valList =  Tool.toArray(val, String.class);
+                        if(option_str != null){
+                            List<OptionBean> optionList = Tool.toArray(option_str, OptionBean.class);
+                            for(OptionBean optionBean : optionList){
+                                if(valList.indexOf(optionBean.getValue().toString()) > -1){
+                                    realVal = optionBean.getLabel();
+                                    show_str += realVal + "、";
+                                }
+                            }
+                            if(show_str.length() > 0){
+                                show_str = show_str.substring(0,show_str.length() - 1);
+                            }
+                            return show_str;
+                        }
+                    }
+                }else if(types.indexOf(bean.getItem_type()) > -1){
                     String option_str = bean.getItem_option();
                     if(option_str != null){
                         List<OptionBean> optionList = Tool.toArray(option_str, OptionBean.class);
@@ -422,5 +441,12 @@ public class SecurityDetailActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        LoadingDialog.setInstance(null);
+        super.onDestroy();
     }
 }

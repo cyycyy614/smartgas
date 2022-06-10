@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 内部颜色 -->
     <solid
-        android:color="#ffffff" />
+        android:color="@color/transparent" />
     <!-- 边缘线条颜色 -->
     <!-- 圆角的幅度 -->
     <corners

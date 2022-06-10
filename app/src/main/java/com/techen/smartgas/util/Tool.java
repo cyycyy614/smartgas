@@ -2,10 +2,12 @@ package com.techen.smartgas.util;
 
 import static com.alibaba.fastjson.JSON.parseObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -218,6 +220,19 @@ public class Tool {
             e.printStackTrace();
         }
         return map;
+    }
+
+    /**
+     * 获取屏幕宽度
+     *
+     * @param activity
+     * @return
+     */
+    public static int getWidth(Activity activity) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+        return width;
     }
 
     public static void Logout(Context context){

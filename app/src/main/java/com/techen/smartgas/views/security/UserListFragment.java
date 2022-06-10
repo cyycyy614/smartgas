@@ -1,5 +1,6 @@
 package com.techen.smartgas.views.security;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,6 +25,7 @@ import com.techen.smartgas.model.NormalBean;
 import com.techen.smartgas.model.SecurityDetailBean;
 import com.techen.smartgas.model.SecurityUserBean;
 import com.techen.smartgas.util.LoadingDialog;
+import com.techen.smartgas.util.MyDialog;
 import com.techen.smartgas.util.RequestUtils;
 import com.techen.smartgas.util.Tool;
 import com.techen.smartgas.widget.IosPopupWindow;
@@ -59,6 +61,7 @@ public class UserListFragment extends Fragment {
     private static final String EXTRA_CODE = "code";
     private static final String EXTRA_FLAG = "flag";
     private static final String EXTRA_SID = "securityId";
+    static Activity mActivity;
 
     @BindView(R.id.plan_address)
     TextView planAddress;
@@ -71,7 +74,7 @@ public class UserListFragment extends Fragment {
     private String TAG = "USERLIST";
 //    private AlertView mAlertView;
 
-    BaseLoadMoreRecyclerAdapter.LoadMoreViewHolder holder;
+    static BaseLoadMoreRecyclerAdapter.LoadMoreViewHolder holder;
     static PullToLoadMoreRecyclerView pullToLoadMoreRecyclerView;
 
     @BindView(R.id.swipe_refresh_layout)
@@ -92,7 +95,7 @@ public class UserListFragment extends Fragment {
     private String securityId;
     private String type;
     int mPosition = 0;
-    private Integer repetition_flag = 0 ;
+    static Integer repetition_flag = 0 ;
 
     public UserListFragment() {
         // Required empty public constructor
@@ -187,14 +190,14 @@ public class UserListFragment extends Fragment {
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                SecurityUserBean.ResultBean.DataListBean mData = itemsBeanList.get(position);
-                mPosition = position;
-                String plan_state = mData.getPlan_state();
-                if(plan_state != null && !plan_state.equals("closed")) {
-                    handleItemClick(mData, position);
-                }else if(plan_state != null && plan_state.equals("closed")){
-                    Toast.makeText(contentView.getContext(), "该计划已经关闭！", Toast.LENGTH_SHORT).show();
-                }
+//                SecurityUserBean.ResultBean.DataListBean mData = itemsBeanList.get(position);
+//                mPosition = position;
+//                String plan_state = mData.getPlan_state();
+//                if(plan_state != null && !plan_state.equals("closed")) {
+//                    handleItemClick(mData, position);
+//                }else if(plan_state != null && plan_state.equals("closed")){
+//                    Toast.makeText(contentView.getContext(), "该计划已经关闭！", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
@@ -294,6 +297,12 @@ public class UserListFragment extends Fragment {
         pullToLoadMoreRecyclerView.putParam("currentPage", pageIndex);
         pullToLoadMoreRecyclerView.putParam("pageSize", 10);
         pullToLoadMoreRecyclerView.requestData();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = activity;
     }
 
     private List<Map<String, Object>> initDatas() {
@@ -466,12 +475,14 @@ public class UserListFragment extends Fragment {
                 btnMiss.setVisibility(View.GONE);
                 btnReject.setVisibility(View.GONE);
             }
-            if (mData.getState().equals("closed")) {
+            if (mData.getState().equals("closed") || mData.getPlan_state().equals("closed")) {
                 btnRecord.setVisibility(View.GONE);
                 btnEnter.setVisibility(View.GONE);
                 btnMiss.setVisibility(View.GONE);
                 btnReject.setVisibility(View.GONE);
             }
+            // 当状态为closed时，入户安检、到访不遇、拒绝安检都不显示；
+            // 当为隐患和正常时，显示安检详情按钮；
             title.setText(mData.getCons_addr());
             address.setText(mData.getCons_addr());
             mobile.setText(mData.getCons_tel());
@@ -488,16 +499,30 @@ public class UserListFragment extends Fragment {
             intent.putExtra("plan_id", mData.getPlan_id() + "");
             intent.putExtra("template_id", mData.getTemplate_id() + "");
             intent.putExtra("account_id", mData.getCons_id() + "");
-            intent.putExtra("repetition_flag", 0);
+            intent.putExtra("repetition_flag", repetition_flag);
             mContext.startActivity(intent);
         }
         @OnClick(R.id.btn_miss)
         public void missClick(View v) {
-            handleUnNormalState("miss","到访不遇");
+            MyDialog.show(mActivity, "更改当前用户为【到访不遇】吗?", new MyDialog.OnConfirmListener() {
+
+                @Override
+                public void onConfirmClick() {
+                    //这里写点击确认后的逻辑
+                    handleUnNormalState("miss","到访不遇");
+                }
+            });
         }
         @OnClick(R.id.btn_reject)
         public void rejectClick(View v) {
-            handleUnNormalState("reject","拒绝安检");
+            MyDialog.show(mActivity, "更改当前用户为【拒绝安检】吗?", new MyDialog.OnConfirmListener() {
+
+                @Override
+                public void onConfirmClick() {
+                    //这里写点击确认后的逻辑
+                    handleUnNormalState("reject","拒绝安检");
+                }
+            });
         }
         @OnClick(R.id.btn_record)
         public void recordClick(View v) {
@@ -532,7 +557,7 @@ public class UserListFragment extends Fragment {
                     System.out.println("print data -- " + bean);
                     mData.setState(code);
                     mData.setDispstate(name);
-                    pullToLoadMoreRecyclerView.onRefresh();
+                    pullToLoadMoreRecyclerView.mLoadMoreRecyclerViewAdapter.notifyItemChanged(mPosition,mData);
                 }
 
                 /**

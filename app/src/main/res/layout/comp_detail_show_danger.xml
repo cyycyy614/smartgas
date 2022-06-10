@@ -114,7 +114,7 @@
             android:layout_weight="1"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
-            android:background="@drawable/rectangel_item"
+            android:background="@drawable/rectangel_noborder_bg_item"
             android:textSize="14dp"
             android:textColor="@color/black"
             android:hint=""

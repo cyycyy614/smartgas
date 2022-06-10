@@ -35,7 +35,7 @@ public class PieChartUtils {
         //饼状图
         pieChart.setUsePercentValues(true);//设置value是否用显示百分数,默认为false
         pieChart.getDescription().setEnabled(false);//设置描述
-        pieChart.setExtraOffsets(20f, 15f, 20f, 15f);//设置饼状图距离上下左右的偏移量
+        pieChart.setExtraOffsets(30f, 15f, 30f, 15f);//设置饼状图距离上下左右的偏移量
 
         pieChart.setDragDecelerationFrictionCoef(0.45f);//设置阻尼系数,范围在[0,1]之间,越小饼状图转动越困难
         //设置中间文字
@@ -151,7 +151,7 @@ public class PieChartUtils {
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
 
         PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter());  //设置所有DataSet内数据实体（百分比）的文本字体格式
+        data.setValueFormatter(new PercentFormatter(chart));  //设置所有DataSet内数据实体（百分比）的文本字体格式
         data.setValueTextSize(13f);//设置所有DataSet内数据实体（百分比）的文本字体大小
         data.setValueTextColor(Color.BLACK); //设置所有DataSet内数据实体（百分比）的文本颜色
 

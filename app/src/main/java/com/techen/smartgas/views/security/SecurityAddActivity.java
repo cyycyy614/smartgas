@@ -67,6 +67,7 @@ import com.techen.smartgas.util.DateTimeHelper;
 import com.techen.smartgas.util.FileUtils;
 import com.techen.smartgas.util.HttpService;
 import com.techen.smartgas.util.ImageCompressUtils;
+import com.techen.smartgas.util.LoadingDialog;
 import com.techen.smartgas.util.RequestUtils;
 import com.techen.smartgas.util.SharedPreferencesUtil;
 import com.techen.smartgas.util.ThreadPoolUtil;
@@ -177,6 +178,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         }
 //        getLocalTempData();
 //        getData();
+        LoadingDialog.getInstance(SecurityAddActivity.this).show();
         getTempData();
     }
 
@@ -259,6 +261,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
              */
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable e) {
+                LoadingDialog.getInstance(SecurityAddActivity.this).hide();
                 Toast.makeText(SecurityAddActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
             }
         });
@@ -308,6 +311,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         groupInfoListBean = securityTempBean.getItemDatas();
         initUserInfo();
         addGroupItems();
+        LoadingDialog.getInstance(SecurityAddActivity.this).hide();
     }
 
     // 点击提交，将数据转换为json数据进行存储
@@ -439,7 +443,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
                     int did = ITEM_MAP.get(itemBean.getKey() + "-report");
                     int demoid = ITEM_MAP.get(itemBean.getKey() + "-demo");
                     TextView dangerTextView =  findViewById(did);
-                    TextView demo =  findViewById(demoid);
+                    EditText demo =  findViewById(demoid);
                     String dangerVal = (String) dangerTextView.getTag();
                     ArrayList<Map<String,Object>> itemImgList = dangerImgList.get(itemId);
                     Map<String,Object>  wObject = new HashMap<>();
@@ -511,6 +515,11 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
 
         try {
             if(isDanger == 1){
+                if(dangerJudge.equals("notNull")){
+                    if(!TextUtils.isEmpty(dangerVal)){
+                        return true;
+                    }
+                }
                 switch (itemBean.getItem_type()){
                     case "input":
                     case "textarea":
@@ -908,7 +917,7 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         LinearLayout layout_isreport = (LinearLayout) layout_danger.findViewById(R.id.layout_isreport);
         TextView select_report = (TextView) layout_isreport.findViewById(R.id.select_report);
         TextView text_method = (TextView) layout_danger.findViewById(R.id.text_method);
-        TextView textarea = (TextView) layout_danger.findViewById(R.id.textarea);
+        EditText textarea = (EditText) layout_danger.findViewById(R.id.textarea);
         LinearLayout upload = (LinearLayout) layout_danger.findViewById(R.id.upload);
         FlowLayout flowlayout = (FlowLayout) layout_danger.findViewById(R.id.flowlayout);
         String method = TextUtils.isEmpty(itemBean.getRectification_method()) ? "" : itemBean.getRectification_method();
@@ -1342,18 +1351,27 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
         if(requestCode == 0) {
             Toast.makeText(this, "权限获得", Toast.LENGTH_SHORT).show();
         } else if(requestCode > 0){
-            if(curItemId > 0){ // 隐患
-                generate_danger_img();
-            } else{
-                generate_img();
-            }
 
             File file = null;
             if(requestCode == 10){//相机
                 file = new File(imgPath);
+                if(file != null && file.length() == 0){
+                    return;
+                }else{
+                    if(curItemId > 0){ // 隐患
+                        generate_danger_img();
+                    } else{
+                        generate_img();
+                    }
+                }
                 Glide.with(this).load(imgPath).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(curUploadImageView);
                 compressImage(imgPath,curUploadImageView);
             }else if(requestCode == 11 && data != null){
+                if(curItemId > 0){ // 隐患
+                    generate_danger_img();
+                } else{
+                    generate_img();
+                }
                 file = new File(UriToFile(data.getData()));
                 compressImage(file.getPath(),curUploadImageView);
                 Glide.with(this).load(data.getData()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(curUploadImageView);
@@ -1475,5 +1493,12 @@ public class SecurityAddActivity extends AppCompatActivity implements View.OnCli
             file.mkdirs();
         }
         return path;
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        LoadingDialog.setInstance(null);
+        super.onDestroy();
     }
 }

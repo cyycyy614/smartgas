@@ -42,7 +42,7 @@
     <string name="w_code">代码线索</string>
     <string name="w_source">工单来源:</string>
     <string name="w_reporter">提报人:</string>
-    <string name="w_reporter_mobile">提报人手机:</string>
+    <string name="w_reporter_mobile">联系方式:</string>
     <string name="w_repairer">维修人:</string>
     <string name="w_repairer_time">维修时间:</string>
     <string name="w_report_time">提报时间:</string>
